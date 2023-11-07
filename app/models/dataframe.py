@@ -92,14 +92,19 @@ class ReporterDataFrame(BaseDataFrame):
         close_df = self._read_close_file(closefile, from_date, to_date)
         join_df = self.join(close_df, how='outer').fillna(0)
         self.update_self(join_df)
-        self.loc['合計'] = self.sum()
-        added_df = self._create_acw_att_cph_columns()
-        self.update_self(added_df)
     
     def test(self):
         print(self[['ワークタイムの合計', 'クローズ']])
+    
+    def get_kpi(self, addition=False, sum=False):
+        if sum:
+            self.loc['合計'] = self.sum()
+        
+        self._create_acw_att_cph_columns(addition)
 
-    def _create_acw_att_cph_columns(self):
+        return self[['ACW', 'ATT', 'CPH', 'クローズ']]
+
+    def _create_acw_att_cph_columns(self, additon):
         '''スクレイピングした指標から、ACW, ATT, CPHを計算してselfにカラムを追加して返す
         0除算を避けるために、0の場合はいったん1にreplaceしている'''
 
