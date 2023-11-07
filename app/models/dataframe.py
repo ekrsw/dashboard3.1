@@ -10,7 +10,6 @@ import settings
 
 
 class BaseDataFrame(pd.DataFrame):
-
     @staticmethod
     def _load_member_list():
          # メンバーリストを読込む。インスタンスが作成されていなくても機能させるため@staticmethodにする。
@@ -48,7 +47,6 @@ class BaseDataFrame(pd.DataFrame):
 
 
 class ReporterDataFrame(BaseDataFrame):
-
     @staticmethod
     def _read_close_file(closefile, from_date, to_date) -> pd.DataFrame:
         """クローズデータの動的ファイルを読込み、Dataframeで返す
@@ -91,13 +89,10 @@ class ReporterDataFrame(BaseDataFrame):
         self = self._convert_reporter_names(self)
         close_df = self._read_close_file(closefile, from_date, to_date)
         join_df = self.join(close_df, how='outer').fillna(0)
-
         self.update_self(join_df)
 
-        
 
 class ActivityDataFrame(BaseDataFrame):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -126,13 +121,11 @@ class ActivityDataFrame(BaseDataFrame):
         self['登録日時 (関連) (サポート案件)'] = pd.to_datetime(self['登録日時 (関連) (サポート案件)'])
         self['時間差'] = (self['登録日時'] - self['登録日時 (関連) (サポート案件)']).abs()
         self.fillna(0, inplace=True)
-
         self.reset_index(drop=True, inplace=True)
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     reporter = Reporter(headless_mode=settings.HEADLESS_MODE)
     df = reporter.get_table_as_dataframe(settings.REPORTER_TEMPLATE, from_date, to_date)
-    
     return ReporterDataFrame(df, close_file, from_date, to_date)
 
 def read_activity(filename, date_obj, *args, **kwargs) -> ActivityDataFrame:
@@ -143,5 +136,4 @@ def read_activity(filename, date_obj, *args, **kwargs) -> ActivityDataFrame:
     # date_objと同じ日付の行のみを残す
     df = df[df['登録日時 (関連) (サポート案件)'].dt.date == date_obj]
     df.reset_index(drop=True, inplace=True)
-
     return ActivityDataFrame(df)
