@@ -138,11 +138,7 @@ class Reporter(object):
         df = pd.DataFrame(data_table[1:], columns=data_table[0])
         df.set_index(df.columns[0], inplace=True)
         
-        # レポータの名前を正式な氏名のフォーマットに変換
-        # df = self.process_df.convert_reporter_names(df)
-        
         # hh:mm:ss形式の時間を1日を1とした時のfloatに変換
-        # df = df.applymap(self.process_df.time_to_days)
         df = df.applymap(process.time_to_days)
 
         return df

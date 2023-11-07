@@ -21,8 +21,7 @@ class BaseDataFrame(pd.DataFrame):
             print(f"Error loading member list: {exc}")
             raise exc
     
-    @staticmethod
-    def _convert_reporter_names(df) -> pd.DataFrame:
+    def _convert_reporter_names(self) -> pd.DataFrame:
         """member_list.xlsxから、レポータの名前を正式な氏名のフォーマットに変換
         Args:
             df(pd.DataFrame): レポータからスクレイピングしたDataFrame
@@ -30,13 +29,12 @@ class BaseDataFrame(pd.DataFrame):
         return:
             df(pd.DataFrame): 名前を正式な氏名のフォーマットに変換したDataFrame"""
 
-        df_member_list = df._load_member_list()
-        print(df_member_list.head())
+        df_member_list = self._load_member_list()
 
         index_dict_reporter = df_member_list.set_index('レポータ')['氏名'].to_dict()
-        df.index = df.index.map(index_dict_reporter)
+        self.index = self.index.map(index_dict_reporter)
         
-        return df
+        return self
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -77,7 +75,7 @@ class ReporterDataFrame(BaseDataFrame):
 
         counts = df.index.value_counts()
         df = pd.DataFrame(counts).reset_index()
-        df.columns = ['ｵﾍﾟﾚｰﾀ', 'ｸﾛｰｽﾞ']
+        df.columns = ['氏名', 'クローズ']
         df = df.set_index(df.columns[0])
 
         return df
@@ -86,10 +84,14 @@ class ReporterDataFrame(BaseDataFrame):
         super().__init__(df, *args, **kwargs)
         self.from_date = from_date
         self.to_date = to_date
-        self = self._convert_reporter_names(self)
+        self._convert_reporter_names()
+        self.rename_axis('氏名', inplace=True)
         close_df = self._read_close_file(closefile, from_date, to_date)
         join_df = self.join(close_df, how='outer').fillna(0)
         self.update_self(join_df)
+    
+    def test(self):
+        print(self[['ワークタイムの合計', 'クローズ']])
 
 
 class ActivityDataFrame(BaseDataFrame):
