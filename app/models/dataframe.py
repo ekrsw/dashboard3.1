@@ -16,16 +16,33 @@ class BaseDataFrame(pd.DataFrame):
          # メンバーリストを読込む。インスタンスが作成されていなくても機能させるため@staticmethodにする。
         file_path = os.path.join(settings.FILES_PATH, settings.MEMBER_LIST)
         try:
-            member_list = pd.read_excel(file_path)
-            return member_list[['氏名', 'グループ']]
+            member_list = pd.read_excel(file_path).fillna('')
+            return member_list[['レポータ', '氏名', 'グループ', '役職']]
         except Exception as exc:
             print(f"Error loading member list: {exc}")
             raise exc
     
+    @staticmethod
+    def _convert_reporter_names(df) -> pd.DataFrame:
+        """member_list.xlsxから、レポータの名前を正式な氏名のフォーマットに変換
+        Args:
+            df(pd.DataFrame): レポータからスクレイピングしたDataFrame
+        
+        return:
+            df(pd.DataFrame): 名前を正式な氏名のフォーマットに変換したDataFrame"""
+
+        df_member_list = df._load_member_list()
+        print(df_member_list.head())
+
+        index_dict_reporter = df_member_list.set_index('レポータ')['氏名'].to_dict()
+        df.index = df.index.map(index_dict_reporter)
+        
+        return df
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
-    def update_data(self, new_data):
+    def update_self(self, new_data):
         for column in new_data.columns:
             self[column] = new_data[column]
 
@@ -71,11 +88,11 @@ class ReporterDataFrame(BaseDataFrame):
         super().__init__(df, *args, **kwargs)
         self.from_date = from_date
         self.to_date = to_date
-        
+        self = self._convert_reporter_names(self)
         close_df = self._read_close_file(closefile, from_date, to_date)
         join_df = self.join(close_df, how='outer').fillna(0)
 
-        self.update_data(join_df)
+        self.update_self(join_df)
 
         
 
@@ -92,7 +109,7 @@ class ActivityDataFrame(BaseDataFrame):
         print("After merge:")
         print(merged_df.head())
 
-        self.update_data(merged_df)
+        self.update_self(merged_df)
         print(self.head())
 
         # 案件番号、登録日時でソート

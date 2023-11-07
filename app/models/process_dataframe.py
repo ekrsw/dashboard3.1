@@ -9,19 +9,6 @@ class ProcessDataframe(object):
         member_list = os.path.join(settings.FILES_PATH, settings.MEMBER_LIST)
         self.df_member_list = pd.read_excel(member_list)
     
-    def time_to_days(self, time_str) -> float:
-        """hh:mm:ss 形式の時間を1日を1としたときの時間に変換する関数
-        Args:
-            time_str(str): hh:mm:ss 形式の時間
-        
-        return:
-            float: 1日を1としたときの時間"""
-        
-
-        t = dt.datetime.strptime(time_str, "%H:%M:%S")
-
-        return (t.hour + t.minute / 60 + t.second / 3600) / 24
-    
     def convert_reporter_names(self, df) -> pd.DataFrame:
         """member_list.xlsxから、レポータの名前を正式な氏名のフォーマットに変換
         Args:

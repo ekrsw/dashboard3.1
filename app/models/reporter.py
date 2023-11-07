@@ -14,6 +14,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 
 from app.models.process_dataframe import ProcessDataframe
+from app.models import process
 import settings
 
 
@@ -102,6 +103,8 @@ class Reporter(object):
 
     def get_table_as_dataframe(self, TEMPLATE, from_date, to_date) -> pd.DataFrame:
         """テンプレートを表示して、tableを2次元配列で取得
+        hh:mm:ss形式の時間を1日を1とした時のfloatに変換
+
         Args:
             TEMPLATE(str): テンプレート名
             from_date(datetime): 集計期間のfrom
@@ -136,10 +139,11 @@ class Reporter(object):
         df.set_index(df.columns[0], inplace=True)
         
         # レポータの名前を正式な氏名のフォーマットに変換
-        df = self.process_df.convert_reporter_names(df)
-
-        # 形式の時間を1日を1としたときの時間に変換する
-        df = df.applymap(self.process_df.time_to_days)
+        # df = self.process_df.convert_reporter_names(df)
+        
+        # hh:mm:ss形式の時間を1日を1とした時のfloatに変換
+        # df = df.applymap(self.process_df.time_to_days)
+        df = df.applymap(process.time_to_days)
 
         return df
 
