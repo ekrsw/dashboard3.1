@@ -30,24 +30,53 @@ class BaseDataFrame(pd.DataFrame):
             self[column] = new_data[column]
 
 
-class CloseDataFrame(pd.DataFrame):
-        
-    def __init__(self, template, from_date, to_date, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        merged_df = self.merge()
+class ReporterDataFrame(BaseDataFrame):
 
-    def __time_to_days(self, time_str) -> float:
-        """hh:mm:ss 形式の時間を1日を1としたときの時間に変換する関数
+    @staticmethod
+    def _read_close_file(closefile, from_date, to_date) -> pd.DataFrame:
+        """クローズデータの動的ファイルを読込み、Dataframeで返す
         Args:
-            time_str(str): hh:mm:ss 形式の時間
-        
+            close_file(str): クローズデータのファイル名
+            date_obj(dt.date): 日付
         return:
-            float: 1日を1としたときの時間"""
+            df(pd.DataFrame): 指定日のクローズデータ"""
+
+
+        from_date_str = from_date.strftime("%Y%m%d")
+        to_date_str = to_date.strftime("%Y%m%d")
+
+        df = pd.read_excel(closefile)
+
+        # 最初の3列をスキップし、5列目をインデックスとして設定します
+        df = df.iloc[:, 3:].set_index(df.columns[5])
         
+        df.reset_index(inplace=True)
+        df.set_index(['完了日時'], inplace=True)
 
-        t = dt.datetime.strptime(time_str, "%H:%M:%S")
+        # DataFrameのインデックスを日付でソートする
+        df.sort_index(inplace=True)
 
-        return (t.hour + t.minute / 60 + t.second / 3600) / 24
+        df = df.loc[from_date_str : to_date_str]
+        df.reset_index(inplace=True)
+        df.set_index(['所有者'], inplace=True)
+
+        counts = df.index.value_counts()
+        df = pd.DataFrame(counts).reset_index()
+        df.columns = ['ｵﾍﾟﾚｰﾀ', 'ｸﾛｰｽﾞ']
+        df = df.set_index(df.columns[0])
+
+        return df
+        
+    def __init__(self, df, closefile, from_date, to_date, *args, **kwargs):
+        super().__init__(df, *args, **kwargs)
+        self.from_date = from_date
+        self.to_date = to_date
+        
+        close_df = self._read_close_file(closefile, from_date, to_date)
+        join_df = self.join(close_df, how='outer').fillna(0)
+
+        self.update_data(join_df)
+
         
 
 class ActivityDataFrame(BaseDataFrame):
@@ -83,11 +112,11 @@ class ActivityDataFrame(BaseDataFrame):
 
         self.reset_index(drop=True, inplace=True)
 
-def read_kpi(close_file_name, from_date, to_date) -> CloseDataFrame:
+def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     reporter = Reporter(headless_mode=settings.HEADLESS_MODE)
     df = reporter.get_table_as_dataframe(settings.REPORTER_TEMPLATE, from_date, to_date)
     
-    return CloseDataFrame(df)
+    return ReporterDataFrame(df, close_file, from_date, to_date)
 
 def read_activity(filename, date_obj, *args, **kwargs) -> ActivityDataFrame:
     df = pd.read_excel(filename, *args, **kwargs)
