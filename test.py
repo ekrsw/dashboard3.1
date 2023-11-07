@@ -15,4 +15,5 @@ close_file = os.path.join(settings.FILES_PATH, settings.TODAYS_CLOSE_FILE)
 # df_2 = adf.read_activity(r"\\mjs.co.jp\datas\CSC共有フォルダ\第47期 東京CSC第二グループ\47期SV共有\ダッシュボードアイテム\files\activity_files\202310_activity.xlsx", dt.date(2023, 10, 15))
 df = adf.read_todays_reporter(os.path.join(settings.FILES_PATH, settings.TODAYS_CLOSE_FILE))
 
-print(df.get_kpi(addition=True, sum=True))
+print(df.get_kpi(addition=True, sum=True, hms=True))
+# f.to_excel("test.xlsx")
