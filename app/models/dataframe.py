@@ -93,9 +93,6 @@ class ReporterDataFrame(BaseDataFrame):
         join_df = self.join(close_df, how='outer').fillna(0)
         self.update_self(join_df)
     
-    def test(self):
-        print(self[['ワークタイムの合計', 'クローズ']])
-    
     def get_kpi(self, addition=False, sum=False, hms=False, digits=2):
         if sum:
             self.loc['合計'] = self.sum()
@@ -165,12 +162,19 @@ def read_todays_reporter(close_file) -> ReporterDataFrame:
     df = reporter.get_table_as_dataframe(settings.REPORTER_TEMPLATE, date_obj, date_obj)
     return ReporterDataFrame(df, close_file, date_obj, date_obj, True)
 
-def read_activity(filename, date_obj, *args, **kwargs) -> ActivityDataFrame:
+def read_activity(filename, from_date, to_date, *args, **kwargs) -> ActivityDataFrame:
+
+    # from_dateとto_dateをpandasのTimestampに変換
+    from_date = pd.Timestamp(from_date)
+    to_date = pd.Timestamp(to_date)
+
     df = pd.read_excel(filename, *args, **kwargs)
     df = df.iloc[:, 3:]
     # '登録日時（関連）（サポート案件）'列を日付型に変換
     df['登録日時 (関連) (サポート案件)'] = pd.to_datetime(df['登録日時 (関連) (サポート案件)'])
-    # date_objと同じ日付の行のみを残す
-    df = df[df['登録日時 (関連) (サポート案件)'].dt.date == date_obj]
+
+    df.sort_values(by='案件番号 (関連) (サポート案件)', inplace=True)
+    # from_dateからto_dateの範囲のデータを抽出
+    df = df[(df['登録日時 (関連) (サポート案件)'] >= from_date) & (df['登録日時 (関連) (サポート案件)'] <= to_date)]
     df.reset_index(drop=True, inplace=True)
     return ActivityDataFrame(df)
