@@ -154,19 +154,17 @@ def read_todays_reporter(close_file) -> ReporterDataFrame:
     df = reporter.get_table_as_dataframe(settings.REPORTER_TEMPLATE, date_obj, date_obj)
     return ReporterDataFrame(df, close_file, date_obj, date_obj, True)
 
-def read_activity(filename, from_date, to_date, *args, **kwargs) -> ActivityDataFrame:
+def read_activity(filename, from_date, to_date) -> ActivityDataFrame:
 
-    # from_dateとto_dateをpandasのTimestampに変換
-    from_date = pd.Timestamp(from_date)
-    to_date = pd.Timestamp(to_date)
-
-    df = pd.read_excel(filename, *args, **kwargs)
+    df = pd.read_excel(filename)
     df = df.iloc[:, 3:]
+    
     # '登録日時（関連）（サポート案件）'列を日付型に変換
     df['登録日時 (関連) (サポート案件)'] = pd.to_datetime(df['登録日時 (関連) (サポート案件)'])
+    df.index = df['登録日時 (関連) (サポート案件)']
+    df.index = df.index.date
 
-    df.sort_values(by='案件番号 (関連) (サポート案件)', inplace=True)
     # from_dateからto_dateの範囲のデータを抽出
-    df = df[(df['登録日時 (関連) (サポート案件)'] >= from_date) & (df['登録日時 (関連) (サポート案件)'] <= to_date)]
+    df = df[(df.index >= from_date) & (df.index <= to_date)]
     df.reset_index(drop=True, inplace=True)
     return ActivityDataFrame(df)

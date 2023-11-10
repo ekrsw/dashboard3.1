@@ -9,12 +9,20 @@ import app.models.dataframe as adf
 import settings
 
 
-activity_file = os.path.join(os.path.join(settings.FILES_PATH, settings.TODAYS_ACTIVITY_FILE))
+from_date = dt.date(2023, 10, 15)
+to_date = dt.date(2023, 10, 17)
+
+activity_file = os.path.join(os.path.join(settings.FILES_PATH, settings.ACTIVITY_FILE))
 
 df = pd.read_excel(activity_file)
 df = df.iloc[:, 3:]
 # '登録日時（関連）（サポート案件）'列を日付型に変換
 df['登録日時 (関連) (サポート案件)'] = pd.to_datetime(df['登録日時 (関連) (サポート案件)'])
-df.set_index('登録日時 (関連) (サポート案件)', inplace=True)
+df.index = df['登録日時 (関連) (サポート案件)']
+df.index = df.index.date
 
-print(df.head())
+# from_dateからto_dateの範囲のデータを抽出
+df = df[(df.index >= from_date) & (df.index <= to_date)]
+df.reset_index(drop=True, inplace=True)
+
+print(df)
