@@ -82,11 +82,11 @@ class ReporterDataFrame(BaseDataFrame):
 
         return df
         
-    def __init__(self, df, closefile, from_date, to_date, additon, *args, **kwargs):
+    def __init__(self, df, closefile, from_date, to_date, addition, *args, **kwargs):
         super().__init__(df, *args, **kwargs)
         self.from_date = from_date
         self.to_date = to_date
-        self.addition = additon
+        self.addition = addition
         self._convert_reporter_names()
         self.rename_axis('氏名', inplace=True)
         close_df = self._read_close_file(closefile, from_date, to_date)
@@ -126,6 +126,9 @@ class ActivityDataFrame(BaseDataFrame):
         self['時間差'] = (self['登録日時'] - self['登録日時 (関連) (サポート案件)']).abs()
         self.fillna(0, inplace=True)
         self.reset_index(drop=True, inplace=True)
+    
+    def _get_kpi(self):
+        pass
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     """指定した範囲のReporterDataFrameを作成する。
