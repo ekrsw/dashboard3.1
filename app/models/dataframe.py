@@ -113,22 +113,14 @@ class ActivityDataFrame(BaseDataFrame):
 
         # 活動DataFrameとメンバーリストDataFrameを'所有者'と'氏名'をキーにしてマージ
         merged_df = self.merge(df_member_group, left_on='所有者 (関連) (サポート案件)', right_on='氏名', how='left')
-        print("After merge:")
-        print(merged_df.head())
-
         self.update_self(merged_df)
-        print(self.head())
 
         # 案件番号、登録日時でソート
         self.sort_values(by=['案件番号 (関連) (サポート案件)', '登録日時'], inplace=True)
 
         # 同一案件番号の最初の活動のみ残して他は削除  
-        print("Before drop_duplicates:")
-        print(self.head())
         self.drop_duplicates(subset='案件番号 (関連) (サポート案件)', keep='first', inplace=True)
-        print("After dropping duplicates:")
-        print(self.head())
-
+        
         # サポート案件の登録日時と、活動の登録日時をPandas Datetime型に変換して、差分を'時間差'カラムに格納、NaNは０変換
         self['登録日時 (関連) (サポート案件)'] = pd.to_datetime(self['登録日時 (関連) (サポート案件)'])
         self['時間差'] = (self['登録日時'] - self['登録日時 (関連) (サポート案件)']).abs()
