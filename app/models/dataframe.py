@@ -137,6 +137,7 @@ def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     
     return:
         df(ReporterDataFrame): テーブルをReporterDataFrameに変換し、'クローズ'カラムを追加したもの。"""
+    
     reporter = Reporter(headless_mode=settings.HEADLESS_MODE)
     df = reporter.get_table_as_dataframe(settings.REPORTER_TEMPLATE, from_date, to_date)
     return ReporterDataFrame(df, close_file, from_date, to_date, False)
@@ -149,12 +150,21 @@ def read_todays_reporter(close_file) -> ReporterDataFrame:
     
     return:
         df(ReporterDataFrame): テーブルをReporterDataFrameに変換し、'クローズ'カラムを追加したもの。"""
+    
     date_obj = dt.date.today()
-    reporter = Reporter(headless_mode=settings.HEADLESS_MODE)
-    df = reporter.get_table_as_dataframe(settings.REPORTER_TEMPLATE, date_obj, date_obj)
-    return ReporterDataFrame(df, close_file, date_obj, date_obj, True)
+    rdf = read_reporter(close_file, date_obj, date_obj)
+    return rdf
 
 def read_activity(filename, from_date, to_date) -> ActivityDataFrame:
+    """'登録日時 (関連) (サポート案件)'が指定した範囲のActivityDataFrameを作成する。
+    
+    Args:
+        filename(str): 活動データのファイル名
+        from_date(date): 集計期間のfrom
+        to_date(date): 集計期間のto
+        
+    return:
+        df(ActivityDataFrame): テーブルをActivityDataFrameに変換したもの。"""
 
     df = pd.read_excel(filename)
     df = df.iloc[:, 3:]
@@ -168,3 +178,16 @@ def read_activity(filename, from_date, to_date) -> ActivityDataFrame:
     df = df[(df.index >= from_date) & (df.index <= to_date)]
     df.reset_index(drop=True, inplace=True)
     return ActivityDataFrame(df)
+
+def read_todays_activity(filename) -> ActivityDataFrame:
+    """本日のActivityDataFrameを作成する。
+    
+    Args:
+        filename(str): 活動データのファイル名
+    
+    return:
+        df(ActivityDataFrame): テーブルをActivityDataFrameに変換したもの。"""
+    
+    date_obj = dt.date.today()
+    adf = read_activity(filename, date_obj, date_obj)
+    return adf
