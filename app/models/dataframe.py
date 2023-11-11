@@ -17,7 +17,9 @@ class BaseDataFrame(pd.DataFrame):
         file_path = os.path.join(settings.FILES_PATH, settings.MEMBER_LIST)
         try:
             member_list = pd.read_excel(file_path).fillna('')
-            return member_list[['レポータ', '氏名', 'グループ', '役職']]
+            member_list = member_list[['レポータ', '氏名', 'グループ', '役職']]
+            member_list['グループ'] = member_list['グループ'].astype(int)
+            return member_list
         except Exception as exc:
             print(f"Error loading member list: {exc}")
             raise exc
@@ -108,6 +110,9 @@ class ActivityDataFrame(BaseDataFrame):
     def __init__(self, df, *args, **kwargs):
         super().__init__(df, *args, **kwargs)
 
+        # 受付けタイプ「直受け」「折返し」「留守電」のみ残す
+        df = df[(df['受付タイプ (関連) (サポート案件)'] == '直受け') | (df['受付タイプ (関連) (サポート案件)'] == '折返し') | (df['受付タイプ (関連) (サポート案件)'] == '留守電')]
+
          # メンバーリストを読込み、'氏名'、'グループ'のカラムのみにする。
         df_member_group = self._load_member_list()
 
@@ -126,9 +131,24 @@ class ActivityDataFrame(BaseDataFrame):
         self['時間差'] = (self['登録日時'] - self['登録日時 (関連) (サポート案件)']).abs()
         self.fillna(0, inplace=True)
         self.reset_index(drop=True, inplace=True)
-    
+        
     def _get_kpi(self):
-        pass
+        # グループごとのDataFrameに分割
+        df_1g = self[self['グループ'] == 1]
+        df_2g = self[self['グループ'] == 2]
+        df_3g = self[self['グループ'] == 3]
+        df_n = self[self['グループ'] == 4]
+        df_other = self[self['グループ'] <= 1]
+
+        return df_1g, df_2g, df_3g, df_n, df_other
+    
+    def get_count(self, group):
+        if group <= 4:
+            df = self[self['グループ'] == group]
+        else:
+            df = self[self['グループ'] <= 1]
+        c_20, c_30, c_40, c_60, c_60over, not_included = p.convert_to_num_of_cases_by_per_time(df)
+        return c_20, c_30, c_40, c_60, c_60over, not_included
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     """指定した範囲のReporterDataFrameを作成する。

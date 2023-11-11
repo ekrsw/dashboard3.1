@@ -1,6 +1,8 @@
 import datetime as dt
 import numpy as np
 
+import pandas as pd
+
 
 def time_to_days(time_str) -> float:
     """hh:mm:ss 形式の時間を1日を1としたときの時間に変換する関数
@@ -61,3 +63,32 @@ def create_acw_att_cph_columns(df, addition):
     df = df.replace(np.inf, 0)
 
     return df
+
+def convert_to_num_of_cases_by_per_time(df):
+    """DataFrameを以下のルールで振分けて、件数を返す
+        c_20: 20分以内
+        c_30: 20分超、30分以内
+        c_40: 30分超、40分以内
+        c_60: 40分超、60分以内 かつ '指標に含める'
+        c_60plus: 60分超 かつ '指標に含める'
+        not_included: 指標に含めない(40分超、60分以内 かつ 60分超)
+
+    Args:
+        df(pd.DataFrame): DataFrame
+        
+    return:
+        c_20(int): 20分以内の件数
+        c_30(int): 20分超、30分以内の件数
+        c_40(int): 30分超、40分以内の件数
+        c_60(int): 40分超、60分以内 かつ '指標に含める'の件数
+        c_60over(int): 60分超 かつ '指標に含める'の件数"""
+
+    c_20 = df[df['時間差'] <= pd.Timedelta(minutes=20)].shape[0]
+    c_30 = df[(pd.Timedelta(minutes=20) < df['時間差']) & (df['時間差'] <= pd.Timedelta(minutes=30))].shape[0]
+    c_40 = df[(pd.Timedelta(minutes=30) < df['時間差']) & (df['時間差'] <= pd.Timedelta(minutes=40))].shape[0]
+    c_60 = df[(pd.Timedelta(minutes=40) < df['時間差']) & (df['時間差'] <= pd.Timedelta(minutes=60)) & (df['指標に含めない (関連) (サポート案件)'] == 'いいえ')].shape[0]
+    not_included = df[(pd.Timedelta(minutes=40) < df['時間差']) & (df['時間差'] <= pd.Timedelta(minutes=60)) & (df['指標に含めない (関連) (サポート案件)'] == 'はい')].shape[0]
+    c_60over = df[(df['時間差'] > pd.Timedelta(minutes=60)) & (df['指標に含めない (関連) (サポート案件)'] == 'いいえ')].shape[0]
+    not_included = not_included + df[(df['時間差'] > pd.Timedelta(minutes=60)) & (df['指標に含めない (関連) (サポート案件)'] == 'はい')].shape[0]
+    
+    return c_20, c_30, c_40, c_60, c_60over, not_included
