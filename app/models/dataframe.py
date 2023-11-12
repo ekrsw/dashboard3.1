@@ -133,34 +133,15 @@ class ActivityDataFrame(BaseDataFrame):
         self.reset_index(drop=True, inplace=True)
     
     def get_kpi(self):
-        c_20_2g, c_30_2g, c_40_2g, c_60_2g, c_60over_2g, not_included_2g, c_2g = self._get_count(2)
-        c_20_3g, c_30_3g, c_40_3g, c_60_3g, c_60over_3g, not_included_3g, c_3g = self._get_count(3)
-        c_20_n, c_30_n, c_40_n, c_60_n, c_60over_n, not_included_n, c_n = self._get_count(4)
-        c_20_other, c_30_other, c_40_other, c_60_other, c_60over_other, not_included_other, c_other = self._get_count(0)
+        """KPIを計算してDataFrameで返す。
+        column: '指標集計対象', '20分以内', '40分以内'
+        index: 'グループ'
+        
+        return:
+            df(pd.DataFrame): KPIを計算したDataFrame"""
 
-        # データを作成
-        data = {
-            '指標集計対象': [c_2g, c_3g, c_n, c_other],
-            '20分以内': [c_20_2g, c_20_3g, c_20_n, c_20_other],
-            '40分以内': [c_20_2g + c_30_2g + c_40_2g, c_20_3g + c_30_3g + c_40_3g, c_20_n + c_30_n + c_40_n, c_20_other + c_30_other + c_40_other]
-        }
-        # カラム名とインデックスを指定してDataFrameを作成
-        df = pd.DataFrame(data, columns=['指標集計対象', '20分以内', '40分以内'], index=['第2G', '第3G', '長岡', 'その他'])
-
-        # 総計行を追加
-        df.loc['総計'] = df.sum()
+        df = p.create_kpi_df(self)
         return df
-    
-    def _get_count(self, group):
-        if group <= 4:
-            df = self[self['グループ'] == group]
-        else:
-            df = self[self['グループ'] <= 1]
-        c_20, c_30, c_40, c_60, c_60over, not_included = p.convert_to_num_of_cases_by_per_time(df)
-
-        # 指標集計対象
-        c = df.shape[0] - not_included
-        return c_20, c_30, c_40, c_60, c_60over, not_included, c
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     """指定した範囲のReporterDataFrameを作成する。

@@ -92,3 +92,53 @@ def convert_to_num_of_cases_by_per_time(df):
     not_included = not_included + df[(df['時間差'] > pd.Timedelta(minutes=60)) & (df['指標に含めない (関連) (サポート案件)'] == 'はい')].shape[0]
     
     return c_20, c_30, c_40, c_60, c_60over, not_included
+
+def create_kpi_df(df) -> pd.DataFrame:
+    """KPIを計算してDataFrameで返す。
+    column: '指標集計対象', '20分以内', '40分以内'
+    index: 'グループ'
+        
+    return:
+        df(pd.DataFrame): KPIを計算したDataFrame"""
+
+    c_20_2g, c_30_2g, c_40_2g, c_60_2g, c_60over_2g, not_included_2g, c_2g = get_count(df, 2)
+    c_20_3g, c_30_3g, c_40_3g, c_60_3g, c_60over_3g, not_included_3g, c_3g = get_count(df, 3)
+    c_20_n, c_30_n, c_40_n, c_60_n, c_60over_n, not_included_n, c_n = get_count(df, 4)
+    c_20_other, c_30_other, c_40_other, c_60_other, c_60over_other, not_included_other, c_other = get_count(df, 0)
+
+    # データを作成
+    data = {
+        '指標集計対象': [c_2g, c_3g, c_n, c_other],
+        '20分以内': [c_20_2g, c_20_3g, c_20_n, c_20_other],
+        '40分以内': [c_20_2g + c_30_2g + c_40_2g, c_20_3g + c_30_3g + c_40_3g, c_20_n + c_30_n + c_40_n, c_20_other + c_30_other + c_40_other]
+    }
+    # カラム名とインデックスを指定してDataFrameを作成
+    kpi_df = pd.DataFrame(data, columns=['指標集計対象', '20分以内', '40分以内'], index=['第2G', '第3G', '長岡', 'その他'])
+
+    # 総計行を追加
+    kpi_df.loc['総計'] = kpi_df.sum()
+    return kpi_df
+
+def get_count(df, group):
+    """指定したグループの各件数を返す。
+    Args:
+        df(pd.DataFrame): DataFrame
+        group(int): グループ
+    
+    return:
+        c_20(int): 20分以内の件数
+        c_30(int): 20分超、30分以内の件数
+        c_40(int): 30分超、40分以内の件数
+        c_60(int): 40分超、60分以内の件数
+        c_60over(int): 60分超の件数
+        c(int): 指標集計対象の件数"""
+    
+    if group <= 4:
+        df = df[df['グループ'] == group]
+    else:
+        df = df[df['グループ'] <= 1]
+    c_20, c_30, c_40, c_60, c_60over, not_included = convert_to_num_of_cases_by_per_time(df)
+
+    # 指標集計対象
+    c = df.shape[0] - not_included
+    return c_20, c_30, c_40, c_60, c_60over, not_included, c
