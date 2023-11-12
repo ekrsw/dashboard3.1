@@ -8,8 +8,14 @@ import app.models.dataframe as adf
 
 import settings
 
+today = dt.date.today()
 
-activity_file = os.path.join(os.path.join(settings.FILES_PATH, settings.TODAYS_ACTIVITY_FILE))
+from_date = today
+to_date = today
 
-df = adf.read_activity(activity_file, dt.date(2023, 10, 15), dt.date(2023, 10, 15))
+activity_file = os.path.join(settings.FILES_PATH, settings.TODAYS_ACTIVITY_FILE)
+
+df = adf.read_activity(activity_file, from_date, to_date)
+df = df.get_kpi()
 print(df)
+
