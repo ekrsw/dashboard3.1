@@ -8,8 +8,8 @@ import app.models.dataframe as adf
 import settings
 
 
-from_date = dt.date(2021, 10, 1)
-to_date = dt.date(2021, 10, 31)
+from_date = dt.date(2023, 10, 1)
+to_date = dt.date(2023, 10, 31)
 
 activity_file = os.path.join(r'/Users/ekoresawa/project/dashboard3.1/dvlp_files', '202310_activity.xlsx')
 
