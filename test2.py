@@ -6,5 +6,5 @@ to_date = dt.date(2023, 10, 31)
 activity_file = r"/Users/ekoresawa/project/dashboard3.1/dvlp_files/202310_activity.xlsx"
 
 df = adf.read_activity(activity_file, from_date, to_date)
-df = df.test()
+df = df.get_kpi()
 print(df)
