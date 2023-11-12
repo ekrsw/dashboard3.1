@@ -142,6 +142,7 @@ class ActivityDataFrame(BaseDataFrame):
 
         df = p.create_kpi_df(self)
         return df
+ 
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     """指定した範囲のReporterDataFrameを作成する。
