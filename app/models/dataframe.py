@@ -148,7 +148,10 @@ class ActivityDataFrame(BaseDataFrame):
         else:
             df = self[self['グループ'] <= 1]
         c_20, c_30, c_40, c_60, c_60over, not_included = p.convert_to_num_of_cases_by_per_time(df)
-        return c_20, c_30, c_40, c_60, c_60over, not_included
+
+        # 指標集計対象
+        c = df.shape[0] - not_included
+        return c_20, c_30, c_40, c_60, c_60over, not_included, c
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     """指定した範囲のReporterDataFrameを作成する。
