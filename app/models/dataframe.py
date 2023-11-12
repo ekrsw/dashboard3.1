@@ -143,7 +143,23 @@ class ActivityDataFrame(BaseDataFrame):
 
         df = p.create_kpi_df(self)
         return df
- 
+    
+    def get_kpi_ts(self):
+        pass
+    
+    def get_direct_kpi(self):
+        """直受率を計算してDataFrameで返す。
+        column: '指標集計対象', '20分以内', '40分以内'
+        index: 'グループ'
+        
+        return:
+            df(pd.DataFrame): KPIを計算したDataFrame"""
+        
+        df = p.create_direct_kpi_df(self)
+        return df
+    
+    def get_direct_kpi_ts(self):
+        pass
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     """指定した範囲のReporterDataFrameを作成する。

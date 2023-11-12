@@ -7,7 +7,7 @@ import app.models.dataframe as adf
 
 import settings
 
-date_obj = dt.date(2023, 11, 9)
+date_obj = dt.date(2023, 11, 12)
 
 from_date = date_obj
 to_date = date_obj
@@ -20,4 +20,4 @@ activity_file = os.path.join(settings.ACTIVITY_FILES_PATH, file_name)
 df = adf.read_activity(activity_file, from_date, to_date)
 df.to_excel('test.xlsx')
 print(df.get_kpi())
-
+print(df.get_direct_kpi())
