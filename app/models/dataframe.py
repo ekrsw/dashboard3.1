@@ -112,25 +112,26 @@ class ActivityDataFrame(BaseDataFrame):
 
         # 受付けタイプ「直受け」「折返し」「留守電」のみ残す
         df = df[(df['受付タイプ (関連) (サポート案件)'] == '直受け') | (df['受付タイプ (関連) (サポート案件)'] == '折返し') | (df['受付タイプ (関連) (サポート案件)'] == '留守電')]
-
+    
          # メンバーリストを読込み、'氏名'、'グループ'のカラムのみにする。
         df_member_group = self._load_member_list()
 
         # 活動DataFrameとメンバーリストDataFrameを'所有者'と'氏名'をキーにしてマージ
-        merged_df = self.merge(df_member_group, left_on='所有者 (関連) (サポート案件)', right_on='氏名', how='left')
-        self.update_self(merged_df)
+        merged_df = df.merge(df_member_group, left_on='所有者 (関連) (サポート案件)', right_on='氏名', how='left')
+        merged_df['グループ'] = merged_df['グループ'].fillna(0).astype(int)
 
         # 案件番号、登録日時でソート
-        self.sort_values(by=['案件番号 (関連) (サポート案件)', '登録日時'], inplace=True)
+        merged_df.sort_values(by=['案件番号 (関連) (サポート案件)', '登録日時'], inplace=True)
 
         # 同一案件番号の最初の活動のみ残して他は削除  
-        self.drop_duplicates(subset='案件番号 (関連) (サポート案件)', keep='first', inplace=True)
+        merged_df.drop_duplicates(subset='案件番号 (関連) (サポート案件)', keep='first', inplace=True)
         
         # サポート案件の登録日時と、活動の登録日時をPandas Datetime型に変換して、差分を'時間差'カラムに格納、NaNは０変換
-        self['登録日時 (関連) (サポート案件)'] = pd.to_datetime(self['登録日時 (関連) (サポート案件)'])
-        self['時間差'] = (self['登録日時'] - self['登録日時 (関連) (サポート案件)']).abs()
-        self.fillna(0, inplace=True)
-        self.reset_index(drop=True, inplace=True)
+        merged_df['登録日時 (関連) (サポート案件)'] = pd.to_datetime(merged_df['登録日時 (関連) (サポート案件)'])
+        merged_df['登録日時'] = pd.to_datetime(merged_df['登録日時'])
+        merged_df['時間差'] = (merged_df['登録日時'] - merged_df['登録日時 (関連) (サポート案件)']).abs()
+        merged_df.reset_index(drop=True, inplace=True)
+        self.update_self(merged_df)
     
     def get_kpi(self):
         """KPIを計算してDataFrameで返す。
