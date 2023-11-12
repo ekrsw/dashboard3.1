@@ -143,12 +143,21 @@ class ActivityDataFrame(BaseDataFrame):
         return df_1g, df_2g, df_3g, df_n, df_other
     
     def get_count(self, group):
-        if group <= 4:
+        if 2 <= group <= 4:
+            # 第1G以外、グループごとのDataFrameに分割
             df = self[self['グループ'] == group]
-        else:
+        elif group <= 1:
+            # TVS案件でTVSメンバー以外が対応した案件は"その他"にする
             df = self[self['グループ'] <= 1]
+        elif group == 'all':
+            df = self
+    
         c_20, c_30, c_40, c_60, c_60over, not_included = p.convert_to_num_of_cases_by_per_time(df)
-        return c_20, c_30, c_40, c_60, c_60over, not_included
+        
+        # 指標集計対象
+        c_aggrigateion_target = df.shape[0] - not_included
+
+        return c_20, c_30, c_40, c_60, c_60over, not_included, c_aggrigateion_target
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     """指定した範囲のReporterDataFrameを作成する。
