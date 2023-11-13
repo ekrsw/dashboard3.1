@@ -135,7 +135,7 @@ def create_direct_kpi_df(df) -> pd.DataFrame:
     # データを作成
     data = {
         '電話対応数': [df_2g.shape[0], df_3g.shape[0], df_n.shape[0], df_other.shape[0]],
-        '直受け': [count_direct_ratio_2g, count_direct_ratio_3g, count_direct_ratio_ｎ, count_direct_ratio_other]
+        '直受け': [count_direct_ratio_2g, count_direct_ratio_3g, count_direct_ratio_n, count_direct_ratio_other]
     }
 
     # カラム名とインデックスを指定してDataFrameを作成
