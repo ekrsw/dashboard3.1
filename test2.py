@@ -7,7 +7,7 @@ import app.models.dataframe as adf
 
 import settings
 
-date_obj = dt.date(2023, 11, 12)
+date_obj = dt.date(2023, 11, 13)
 
 from_date = date_obj
 to_date = date_obj
@@ -15,7 +15,7 @@ to_date = date_obj
 date_str = from_date.strftime('%Y%m')
 file_name = f'{date_str}_activity.xlsx'
 
-activity_file = os.path.join(settings.ACTIVITY_FILES_PATH, file_name)
+activity_file = os.path.join(settings.FILES_PATH, 'todays_activity.xlsm')
 
 df = adf.read_activity(activity_file, from_date, to_date)
 df.to_excel('test.xlsx')
