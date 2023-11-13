@@ -133,7 +133,7 @@ class ActivityDataFrame(BaseDataFrame):
         merged_df.reset_index(drop=True, inplace=True)
         self.update_self(merged_df)
     
-    def get_kpi(self):
+    def get_kpi(self) -> pd.DataFrame:
         """KPIを計算してDataFrameで返す。
         column: '指標集計対象', '20分以内', '40分以内'
         index: 'グループ'
@@ -147,7 +147,7 @@ class ActivityDataFrame(BaseDataFrame):
     def get_kpi_ts(self):
         pass
     
-    def get_direct_kpi(self):
+    def get_direct_kpi(self) -> pd.DataFrame:
         """直受率を計算してDataFrameで返す。
         column: '指標集計対象', '20分以内', '40分以内'
         index: 'グループ'
