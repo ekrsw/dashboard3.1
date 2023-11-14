@@ -168,6 +168,11 @@ class PendingDataFrame(BaseDataFrame):
 
         # 受付けタイプ「直受け」「折返し」「留守電」のみ残す
         df = df[(df['受付タイプ (関連) (サポート案件)'] == '直受け') | (df['受付タイプ (関連) (サポート案件)'] == '折返し') | (df['受付タイプ (関連) (サポート案件)'] == '留守電')]
+        
+        # 指標に含めないが「いいえ」のもののみ残す
+        df = df[df['指標に含めない (関連) (サポート案件)'] == 'いいえ']
+
+        df = df[(df['顛末コード (関連) (サポート案件)'] == '対応中') | (df['顛末コード (関連) (サポート案件)'] == '対応待ち')]
 
         # 件名に「【受付】」が含まれているもののみ残す。
         contains_df = df[df['件名'].str.contains('【受付】', na=False)]
@@ -193,8 +198,7 @@ class PendingDataFrame(BaseDataFrame):
         
         # サポート案件の登録日時と、活動の登録日時をPandas Datetime型に変換して、差分を'時間差'カラムに格納、NaNは０変換
         merged_df['登録日時 (関連) (サポート案件)'] = pd.to_datetime(merged_df['登録日時 (関連) (サポート案件)'])
-        merged_df['登録日時'] = pd.to_datetime(merged_df['登録日時'])
-        merged_df['時間差'] = (merged_df['登録日時'] - merged_df['登録日時 (関連) (サポート案件)']).abs()
+        merged_df['お待たせ時間'] = (dt.datetime(2023, 11, 14, 18, 34) - merged_df['登録日時 (関連) (サポート案件)']).abs()
         merged_df.reset_index(drop=True, inplace=True)
         self.update_self(merged_df)
     
