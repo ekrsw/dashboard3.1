@@ -113,9 +113,6 @@ class ActivityDataFrame(BaseDataFrame):
         # 受付けタイプ「直受け」「折返し」「留守電」のみ残す
         df = df[(df['受付タイプ (関連) (サポート案件)'] == '直受け') | (df['受付タイプ (関連) (サポート案件)'] == '折返し') | (df['受付タイプ (関連) (サポート案件)'] == '留守電')]
 
-        # 件名に「【受付】」が含まれているものを排除する。
-        df = df[~df['件名'].str.contains('【受付】', na=False)]
-
          # メンバーリストを読込み、'氏名'、'グループ'のカラムのみにする。
         df_member_group = self._load_member_list()
 
@@ -163,6 +160,48 @@ class ActivityDataFrame(BaseDataFrame):
     
     def get_direct_kpi_ts(self):
         pass
+
+
+class PendingDataFrame(BaseDataFrame):
+    def __init__(self, df, *args, **kwargs):
+        super().__init__(df, *args, **kwargs)
+
+        # 受付けタイプ「直受け」「折返し」「留守電」のみ残す
+        df = df[(df['受付タイプ (関連) (サポート案件)'] == '直受け') | (df['受付タイプ (関連) (サポート案件)'] == '折返し') | (df['受付タイプ (関連) (サポート案件)'] == '留守電')]
+
+        # 件名に「【受付】」が含まれているもののみ残す。
+        contains_df = df[df['件名'].str.contains('【受付】', na=False)]
+        uncontains_df = df[~df['件名'].str.contains('【受付】', na=False)]
+
+        only_contains_df = pd.merge(contains_df, uncontains_df, on='案件番号 (関連) (サポート案件)', how='outer', indicator=True)
+        result = only_contains_df[only_contains_df['_merge'] == 'left_only']
+        s = result['案件番号 (関連) (サポート案件)'].unique()
+        df = df[df['案件番号 (関連) (サポート案件)'].isin(s)]
+
+         # メンバーリストを読込み、'氏名'、'グループ'のカラムのみにする。
+        df_member_group = self._load_member_list()
+
+        # 活動DataFrameとメンバーリストDataFrameを'所有者'と'氏名'をキーにしてマージ
+        merged_df = df.merge(df_member_group, left_on='所有者 (関連) (サポート案件)', right_on='氏名', how='left')
+        merged_df['グループ'] = merged_df['グループ'].fillna(0).astype(int)
+
+        # 案件番号、登録日時でソート
+        merged_df.sort_values(by=['案件番号 (関連) (サポート案件)', '登録日時'], inplace=True)
+
+        # 同一案件番号の最初の活動のみ残して他は削除  
+        merged_df.drop_duplicates(subset='案件番号 (関連) (サポート案件)', keep='first', inplace=True)
+        
+        # サポート案件の登録日時と、活動の登録日時をPandas Datetime型に変換して、差分を'時間差'カラムに格納、NaNは０変換
+        merged_df['登録日時 (関連) (サポート案件)'] = pd.to_datetime(merged_df['登録日時 (関連) (サポート案件)'])
+        merged_df['登録日時'] = pd.to_datetime(merged_df['登録日時'])
+        merged_df['時間差'] = (merged_df['登録日時'] - merged_df['登録日時 (関連) (サポート案件)']).abs()
+        merged_df.reset_index(drop=True, inplace=True)
+        self.update_self(merged_df)
+    
+    def get_over_pending(self) -> pd.DataFrame:
+        df = p.create_pending_case_df(self)
+        return df
+    
 
 def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     """指定した範囲のReporterDataFrameを作成する。
@@ -228,3 +267,18 @@ def read_todays_activity(filename) -> ActivityDataFrame:
     date_obj = dt.date.today()
     adf = read_activity(filename, date_obj, date_obj)
     return adf
+
+def read_pending_case(filename) -> PendingDataFrame:
+    date_obj = dt.date.today()
+    df = pd.read_excel(filename)
+    df = df.iloc[:, 3:]
+    
+    # '登録日時（関連）（サポート案件）'列を日付型に変換
+    df['登録日時 (関連) (サポート案件)'] = pd.to_datetime(df['登録日時 (関連) (サポート案件)'])
+    df.index = df['登録日時 (関連) (サポート案件)']
+    df.index = df.index.date
+
+    # from_dateからto_dateの範囲のデータを抽出
+    df = df[(df.index >= date_obj) & (df.index <= date_obj)]
+    df.reset_index(drop=True, inplace=True)
+    return PendingDataFrame(df)

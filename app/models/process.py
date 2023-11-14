@@ -93,6 +93,12 @@ def convert_to_num_of_cases_by_per_time(df):
     
     return c_20, c_30, c_40, c_60, c_60over, not_included
 
+def convert_to_pending_num(df):
+    c_20over = df[df['時間差'] >= pd.Timedelta(minutes=20)].shape[0]
+    c_40over = df[df['時間差'] >= pd.Timedelta(minutes=40)].shape[0]
+
+    return c_20over, c_40over
+
 def create_kpi_df(df) -> pd.DataFrame:
     """KPIを計算してDataFrameで返す。
     column: '指標集計対象', '20分以内', '40分以内'
@@ -145,6 +151,26 @@ def create_direct_kpi_df(df) -> pd.DataFrame:
     df.loc['総計'] = df.sum()
 
     return df
+
+def create_pending_case_df(df):
+    df_1g, df_2g, df_3g, df_n, df_other = split_by_group(df)
+
+    c_20over_2g, c_40over_2g = convert_to_pending_num(df_2g)
+    c_20over_3g, c_40over_3g = convert_to_pending_num(df_3g)
+    c_20over_n, c_40over_n = convert_to_pending_num(df_n)
+    c_20over_other, c_40over_other = convert_to_pending_num(df_other)
+
+     # データを作成
+    data = {
+        '20分超滞留中': [c_20over_2g, c_20over_3g, c_20over_n, c_20over_other],
+        '40分超滞留中': [c_40over_2g, c_40over_3g, c_40over_n, c_40over_other],
+    }
+    # カラム名とインデックスを指定してDataFrameを作成
+    kpi_df = pd.DataFrame(data, columns=['指標集計対象', '20分超滞留中', '40分超滞留中'], index=['第2G', '第3G', '長岡', 'その他'])
+
+    # 総計行を追加
+    kpi_df.loc['総計'] = kpi_df.sum()
+
 
 def split_by_group(df):
     # グループごとのDataFrameに分割
