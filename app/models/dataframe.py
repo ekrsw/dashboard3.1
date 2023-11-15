@@ -201,7 +201,7 @@ class PendingDataFrame(BaseDataFrame):
         
         # サポート案件の登録日時と、活動の登録日時をPandas Datetime型に変換して、差分を'時間差'カラムに格納、NaNは０変換
         merged_df['登録日時 (関連) (サポート案件)'] = pd.to_datetime(merged_df['登録日時 (関連) (サポート案件)'])
-        merged_df['お待たせ時間'] = (dt.datetime(2023, 11, 14, 18, 34) - merged_df['登録日時 (関連) (サポート案件)']).abs()
+        merged_df['お待たせ時間'] = (dt.datetime.now() - merged_df['登録日時 (関連) (サポート案件)']).abs()
         merged_df.reset_index(drop=True, inplace=True)
         self.update_self(merged_df)
     
