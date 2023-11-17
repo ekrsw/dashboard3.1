@@ -1,0 +1,88 @@
+body {
+    font-family: "Meyrio";
+    background-color: #F5F7FD;
+}
+.last-data-acquisition-date p {
+    font-size: 14px;
+    margin: 5px 5px 5px 5px;
+}
+.acc_time_container {
+    display: flex;
+}
+.aac_box, .time_box {
+    width: 160px;
+    height: 90px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    padding: 5px 10px;
+    margin: 5px 5px;
+}
+.container {
+    display: flex;
+}
+.box {
+    width: 350px;
+    height: 200px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    padding: 5px 10px;
+    margin: 5px 5px;
+}
+.contents {
+    font-weight: bold;
+    font-size: 20px;
+    color: #404040;
+    text-align: center;
+}
+.label {
+    font-weight: bold;
+    font-size: 20px;
+    color: #193A95;
+}
+.contents-container {
+    width: 700px;
+    display: flex;
+    font-size: 20px;
+    margin: 0px;
+}
+.group {
+    font-weight: bold;
+    color: #404040;
+    width: 100px;
+    margin: 0px;
+    text-align: left;
+}
+.ratio {
+    font-weight: bold;
+    color: #404040;
+    width: 120px;
+    margin: 0px;
+    text-align: right;
+}
+.count {
+    font-weight: bold;
+    color: #404040;
+    width: 50px;
+    margin: 0px;
+    text-align: right;
+}
+.bar {
+     font-weight: bold;
+    color: #404040;
+    width: 20px;
+    margin: 0px;
+    text-align: right;
+}
+.group, .ratio, .count, .bar {
+    height: 33px;
+}
+
+h1 {
+    font-size: 33px;
+    color: #404040;
+    margin: 0px 0px 0px 15px;
+}
+.notes p {
+    font-size: 11px;
+    margin: 0px 0px 0px 15px;
+}

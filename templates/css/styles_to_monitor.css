@@ -1,0 +1,40 @@
+body {
+    font-family: "Meyrio";
+    background-color: #F5F7FD;
+}
+.last-data-acquisition-date p {
+    font-size: 30px;
+    margin: 5px 5px 5px 5px;
+}
+.container {
+    display: flex;
+}
+.box {
+    width: 310px;
+    height: 210px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    padding: 5px 10px;
+    margin: 5px 5px;
+}
+.contents {
+    font-weight: bold;
+    font-size: 60px;
+    color: #404040;
+    text-align: center;
+}
+.label {
+    font-weight: bold;
+    font-size: 40px;
+    color: #193A95;
+}
+
+h1 {
+    font-size: 55px;
+    color: #404040;
+    margin: 0px 0px 0px 15px;
+}
+.notes p {
+    font-size: 30px;
+    margin: 0px 0px 0px 15px;
+}
