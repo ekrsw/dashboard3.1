@@ -8,7 +8,7 @@ import app.models.dataframe as adf
 import settings
 
 
-date_obj = dt.date(2023, 11, 17)
+date_obj = dt.date(2023, 11, 20)
 
 from_date = date_obj
 to_date = date_obj
@@ -23,6 +23,7 @@ df = adf.read_activity(activity_file, from_date, to_date)
 pending_df = adf.read_pending_case(activity_file)
 
 pprint(df.get_kpi())
+print(df.get_direct_kpi())
 pprint(pending_df.get_over_pending())
 
 df.to_excel('activity.xlsx')
