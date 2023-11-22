@@ -8,7 +8,7 @@ import app.models.dataframe as adf
 import settings
 
 
-date_obj = dt.date(2023, 11, 20)
+date_obj = dt.date(2023, 11, 22)
 
 from_date = date_obj
 to_date = date_obj
