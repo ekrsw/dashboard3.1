@@ -8,10 +8,10 @@ import app.models.dataframe as adf
 import settings
 
 
-date_obj = dt.date(2023, 11, 25)
+date_obj = dt.date(2023, 11, 29)
 
-from_date = date_obj
-to_date = date_obj
+from_date = dt.date(2023, 11, 1)
+to_date = dt.date(2023, 11, 30)
 
 date_str = from_date.strftime('%Y%m')
 file_name = f'{date_str}_activity.xlsx'
@@ -25,6 +25,3 @@ pending_df = adf.read_pending_case(activity_file)
 pprint(df.get_kpi())
 print(df.get_direct_kpi())
 pprint(pending_df.get_over_pending())
-
-df.to_excel('activity.xlsx')
-pending_df.to_excel('pending.xlsx')
