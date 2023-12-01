@@ -1,4 +1,6 @@
+import datetime as dt
 import logging
+import os
 
 from app.controller import controller
 
@@ -11,5 +13,6 @@ logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
     logger.info('test')
-    controller.test_today()
+    controller.make_html_performance()
+    controller.make_html_kpi()
     

@@ -183,3 +183,4 @@ def split_by_group(df):
     df_other = df[df['グループ'] <= 1]
 
     return df_1g, df_2g, df_3g, df_n, df_other
+

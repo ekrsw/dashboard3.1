@@ -88,7 +88,7 @@ class ReporterDataFrame(BaseDataFrame):
         super().__init__(df, *args, **kwargs)
         self.from_date = from_date
         self.to_date = to_date
-        self.addition = addition
+        self.addtion = addition
         self._convert_reporter_names()
         self.rename_axis('氏名', inplace=True)
         close_df = self._read_close_file(closefile, from_date, to_date)
