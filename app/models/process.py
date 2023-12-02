@@ -184,3 +184,51 @@ def split_by_group(df):
 
     return df_1g, df_2g, df_3g, df_n, df_other
 
+def calc_ratio_20_40(df_arg):
+    df_copy = df_arg.copy()
+    columns_to_convert = ['指標集計対象', '20分以内', '40分以内', '電話対応数', '直受け', '20分超滞留中', '40分超滞留中']
+
+    # 計算に使用するカラムの値をfloatに変換
+    for col in columns_to_convert:
+        df_copy[col] = df_copy[col].astype(float)
+    
+    # 実際の計算
+    _tmp = df_copy['指標集計対象'] + df_copy['20分超滞留中']
+    df_copy['20分以内率'] = np.where(
+        _tmp == 0,
+        0,
+        df_copy['20分以内'] / _tmp
+    )
+    
+    _tmp = df_copy['指標集計対象'] + df_copy['40分超滞留中']
+    df_copy['40分以内率'] = np.where(
+        _tmp == 0,
+        0,
+        df_copy['40分以内'] / _tmp
+    )
+
+    df_copy['直受け率'] = df_copy['直受け'] / df_copy['電話対応数'].replace(0, 1)
+    df_copy.loc[df_copy['電話対応数']==0, '直受け率'] = 0
+
+    df = df_copy.replace(np.inf, 0)
+
+    df['20分以内率'] = df['20分以内率'].apply(lambda x: round(x * 100, 1))
+    df['40分以内率'] = df['40分以内率'].apply(lambda x: round(x * 100, 1))
+    df['直受け率'] = df['直受け率'].apply(lambda x: round(x * 100, 1))
+    
+    return df[['20分以内率', '40分以内率', '直受け率']]
+
+def convert_time_format(time_str):
+    try:
+        # 時間を時間、分、秒に分割
+        hh, mm, ss = map(int, time_str.split(':'))
+        
+        # 時間を分に変換し、分を合計
+        total_minutes = hh * 60 + mm
+        
+        # 新しい時間フォーマットを作成
+        new_time_str = f'{total_minutes:02d}:{ss:02d}'
+        return new_time_str
+    except ValueError:
+        # 不正な時間形式の場合はエラーメッセージを表示
+        return "Invalid time format"

@@ -1,16 +1,164 @@
 import datetime as dt
 import os
 import pandas as pd
+import string
 
 from app.models import dataframe as mdf
-from app.models import process as ps
+from app.models import process as mp
 
 import settings
 
 close_file = os.path.join(settings.FILES_PATH, settings.TODAYS_CLOSE_FILE)
 activity_file = os.path.join(settings.FILES_PATH, settings.TODAYS_ACTIVITY_FILE)
+now = dt.datetime.now()
 
-def make_html_performance() -> None:
+
+def df_to_html():
+    df_performance = make_df_performance()
+    df_kpi_count = make_df_kpi()
+    
+    # 第2G合計のACW, ATT, CPHを取得する。
+    dep_acw = df_performance.loc['合計', 'ACW']
+    dep_att = df_performance.loc['合計', 'ATT']
+    dep_cph = df_performance.loc['合計', 'CPH']
+    
+    df_kpi_ratio = mp.calc_ratio_20_40(df_kpi_count)
+
+    ratio_direct_2g = df_kpi_ratio.loc['第2G', '直受け率']
+    ratio_direct_3g = df_kpi_ratio.loc['第3G', '直受け率']
+    ratio_direct_n = df_kpi_ratio.loc['長岡', '直受け率']
+    ratio_direct_other = df_kpi_ratio.loc['その他', '直受け率']
+    ratio_direct_all = df_kpi_ratio.loc['総計', '直受け率']
+
+    ratio_20_2g = df_kpi_ratio.loc['第2G', '20分以内率']
+    ratio_20_3g = df_kpi_ratio.loc['第3G', '20分以内率']
+    ratio_20_n = df_kpi_ratio.loc['長岡', '20分以内率']
+    ratio_20_other = df_kpi_ratio.loc['その他', '20分以内率']
+    ratio_20_all = df_kpi_ratio.loc['総計', '20分以内率']
+    ratio_40_2g = df_kpi_ratio.loc['第2G', '40分以内率']
+    ratio_40_3g = df_kpi_ratio.loc['第3G', '40分以内率']
+    ratio_40_n = df_kpi_ratio.loc['長岡', '40分以内率']
+    ratio_40_other = df_kpi_ratio.loc['その他', '40分以内率']
+    ratio_40_all = df_kpi_ratio.loc['総計', '40分以内率']
+
+    count_direct_2g = df_kpi_count.loc['第2G', '直受け']
+    count_direct_3g = df_kpi_count.loc['第3G', '直受け']
+    count_direct_n = df_kpi_count.loc['長岡', '直受け']
+    count_direct_other = df_kpi_count.loc['その他', '直受け']
+    count_direct_all = df_kpi_count.loc['総計', '直受け']
+
+    count_20_2g = df_kpi_count.loc['第2G', '20分以内']
+    count_20_3g = df_kpi_count.loc['第3G', '20分以内']
+    count_20_n = df_kpi_count.loc['長岡', '20分以内']
+    count_20_other = df_kpi_count.loc['その他', '20分以内']
+    count_20_all = df_kpi_count.loc['総計', '20分以内']
+    count_40_2g = df_kpi_count.loc['第2G', '40分以内']
+    count_40_3g = df_kpi_count.loc['第3G', '40分以内']
+    count_40_n = df_kpi_count.loc['長岡', '40分以内']
+    count_40_other = df_kpi_count.loc['その他', '40分以内']
+    count_40_all = df_kpi_count.loc['総計', '40分以内']
+
+    count_direct_all_2g = df_kpi_count.loc['第2G', '電話対応数']
+    count_direct_all_3g = df_kpi_count.loc['第3G', '電話対応数']
+    count_direct_all_n = df_kpi_count.loc['長岡', '電話対応数']
+    count_direct_all_other = df_kpi_count.loc['その他', '電話対応数']
+    count_direct_all_all = df_kpi_count.loc['総計', '電話対応数']
+    count_all_2g = df_kpi_count.loc['第2G', '指標集計対象']
+    count_all_3g = df_kpi_count.loc['第3G', '指標集計対象']
+    count_all_n = df_kpi_count.loc['長岡', '指標集計対象']
+    count_all_other = df_kpi_count.loc['その他', '指標集計対象']
+    count_all_all = df_kpi_count.loc['総計', '指標集計対象']
+
+    monitor_acw = mp.convert_time_format(dep_acw)
+    monitor_att = mp.convert_time_format(dep_att)
+
+    df_performance_html = df_performance.copy()
+    df_performance_html = df_performance_html.drop('合計')
+    df_performance_html['氏名'] = df_performance_html.index
+    df_performance_html = df_performance_html[['氏名', 'シフト', 'ACW', 'ATT', 'CPH', 'クローズ']]
+    html_table = df_performance_html.to_html(index=False, classes="styled-table")
+    html_table = html_table.replace(' style="text-align: right;"', '')
+    html_table = html_table.replace('dataframe styled-table', 'styled-table')
+
+    # ダッシュボード用のテンプレート読込み
+    formatten_datetime = now.strftime('%Y/%m/%d %H:%M:%S')
+    with open(r'templates\templates_dashboard.txt', 'r') as template_file:
+        t_dashboard = string.Template(template_file.read())
+    
+    html_to_dashboard = t_dashboard.substitute(formatten_datetime=formatten_datetime,
+                               dep_acw=dep_acw,
+                               dep_att=dep_att,
+                               dep_cph=dep_cph,
+                               ratio_direct_2g=ratio_direct_2g,
+                               ratio_direct_3g=ratio_direct_3g,
+                               ratio_direct_n=ratio_direct_n,
+                               ratio_direct_other=ratio_direct_other,
+                               ratio_direct_all=ratio_direct_all,
+                               ratio_20_2g=ratio_20_2g,
+                               ratio_20_3g=ratio_20_3g,
+                               ratio_20_n=ratio_20_n,
+                               ratio_20_other=ratio_20_other,
+                               ratio_20_all=ratio_20_all,
+                               ratio_40_2g=ratio_40_2g,
+                               ratio_40_3g=ratio_40_3g,
+                               ratio_40_n=ratio_40_n,
+                               ratio_40_other=ratio_40_other,
+                               ratio_40_all=ratio_40_all,
+                               count_direct_2g=count_direct_2g,
+                               count_direct_3g=count_direct_3g,
+                               count_direct_n=count_direct_n,
+                               count_direct_other=count_direct_other,
+                               count_direct_all=count_direct_all,
+                               count_20_2g=count_20_2g,
+                               count_20_3g=count_20_3g,
+                               count_20_n=count_20_n,
+                               count_20_other=count_20_other,
+                               count_20_all=count_20_all,
+                               count_40_2g=count_40_2g,
+                               count_40_3g=count_40_3g,
+                               count_40_n=count_40_n,
+                               count_40_other=count_40_other,
+                               count_40_all=count_40_all,
+                               count_direct_all_2g=count_direct_all_2g,
+                               count_direct_all_3g=count_direct_all_3g,
+                               count_direct_all_n=count_direct_all_n,
+                               count_direct_all_other=count_direct_all_other,
+                               count_direct_all_all=count_direct_all_all,
+                               count_all_2g=count_all_2g,
+                               count_all_3g=count_all_3g,
+                               count_all_n=count_all_n,
+                               count_all_other=count_all_other,
+                               count_all_all=count_all_all)
+    
+    with open(os.path.join(settings.DASHBOARD_PATH, 'dashboard.html'), 'w') as f:
+        f.write(html_to_dashboard)
+    
+    # モニター用テンプレートの読込み
+    with open(r'templates\templates_monitor.txt', 'r') as template_file:
+        t_monitor = string.Template(template_file.read())
+    
+    html_to_monitor = t_monitor.substitute(formatten_datetime=formatten_datetime,
+                               dep_acw=monitor_acw,
+                               dep_att=monitor_att,
+                               dep_cph=dep_cph,
+                               ratio_direct_all=ratio_direct_all,
+                               ratio_20_all=ratio_20_all,
+                               ratio_40_all=ratio_40_all)
+    
+    with open(os.path.join(settings.MONITOR_PATH, 'monitor.html'), 'w') as f_monitor:
+        f_monitor.write(html_to_monitor)
+    
+    # パフォーマンス用テンプレートの読込み
+    with open(r'templates\templates_performance.txt', 'r') as template_file:
+        t_performance = string.Template(template_file.read())
+
+    html_to_performance = t_performance.substitute(formatten_datetime=formatten_datetime,
+                               html_table=html_table)
+    
+    with open(os.path.join(settings.PERFORMANCE_PATH, 'index.html'), 'w') as f:
+        f.write(html_to_performance)
+
+def make_df_performance() -> pd.DataFrame:
     """個人別パフォーマンスのとシフト、業務ステータスのDataFrameを作成する。"""
 
     rdf = mdf.read_todays_reporter(close_file)
@@ -26,18 +174,21 @@ def make_html_performance() -> None:
     df_join = df_acw_att_cph.join(df_shift, how='left').fillna('未設定')
     df_join = df_join[['シフト', 'ACW', 'ATT', 'CPH', 'クローズ']]
     df_sorted = df_join.sort_values(by=['クローズ', 'シフト'], ascending=[False, True])
-    print(df_sorted)
+    return df_sorted
 
-def make_html_kpi() -> None:
+def make_df_kpi() -> pd.DataFrame:
     """KPIのDataFrameを作成する。"""
 
     rdf = mdf.read_todays_activity(activity_file)
     df_kpi = rdf.get_kpi()
+    df_direct_kpi = rdf.get_direct_kpi()
     pdf = mdf.read_pending_case(activity_file)
     df_pending = pdf.get_over_pending()
 
-    print(df_kpi)
-    print(df_pending)
+    df_join = df_kpi.join(df_direct_kpi, how='left').fillna(0)
+    df_join = df_join.join(df_pending, how='left').fillna(0)
+    
+    return df_join
 
 def read_today_shift_file():
     # シフトのCSVファイルからシフトデータを読み込み、名前をインデックスに設定する。

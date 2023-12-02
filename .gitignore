@@ -2,3 +2,4 @@ dvlp_files
 settings.py
 .venv
 dashboard3.1.code-workspace
+export_test/

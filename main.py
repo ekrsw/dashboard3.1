@@ -13,6 +13,6 @@ logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
     logger.info('test')
-    controller.make_html_performance()
-    controller.make_html_kpi()
+    controller.df_to_html()
+
     
