@@ -1,5 +1,6 @@
 dvlp_files
 settings.py
+run_script.bat
 .venv
 dashboard3.1.code-workspace
 export_test/
