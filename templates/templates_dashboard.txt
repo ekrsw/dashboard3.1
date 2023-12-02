@@ -77,27 +77,27 @@
                 <div class="contents">
                 <div class="contents-container">
                     <p class="group">第2G</p>
-                    <p class="count">$count_20_2g</p><p class="bar"> / </p><p class="count">$count_all_2g</p>
+                    <p class="count">$count_20_2g</p><p class="bar"> / </p><p class="count">$count_all_2g_20</p>
                     <p class="ratio">$ratio_20_2g %</p>
                 </div>
                 <div class="contents-container">
                     <p class="group">第3G</p>
-                    <p class="count">$count_20_3g</p><p class="bar"> / </p><p class="count">$count_all_3g</p>
+                    <p class="count">$count_20_3g</p><p class="bar"> / </p><p class="count">$count_all_3g_20</p>
                     <p class="ratio">$ratio_20_3g %</p>
                 </div>
                 <div class="contents-container">
                     <p class="group">長岡</p>
-                    <p class="count">$count_20_n</p><p class="bar"> / </p><p class="count">$count_all_n</p>
+                    <p class="count">$count_20_n</p><p class="bar"> / </p><p class="count">$count_all_n_20</p>
                     <p class="ratio">$ratio_20_n %</p>
                 </div>
                 <div class="contents-container">
                     <p class="group">その他</p>
-                    <p class="count">$count_20_other</p><p class="bar"> / </p><p class="count">$count_all_other</p>
+                    <p class="count">$count_20_other</p><p class="bar"> / </p><p class="count">$count_all_other_20</p>
                     <p class="ratio">$ratio_20_other %</p>
                 </div>
                 <div class="contents-container">
                     <p class="group">総計</p>
-                    <p class="count">$count_20_all</p><p class="bar"> / </p><p class="count">$count_all_all</p>
+                    <p class="count">$count_20_all</p><p class="bar"> / </p><p class="count">$count_all_all_20</p>
                     <p class="ratio">$ratio_20_all %</p>
                 </div>
                 </div>
@@ -107,27 +107,27 @@
                 <div class="contents">
                 <div class="contents-container">
                     <p class="group">第2G</p>
-                    <p class="count">$count_40_2g</p><p class="bar"> / </p><p class="count">$count_all_2g</p>
+                    <p class="count">$count_40_2g</p><p class="bar"> / </p><p class="count">$count_all_2g_40</p>
                     <p class="ratio">$ratio_40_2g %</p>
                 </div>
                 <div class="contents-container">
                     <p class="group">第3G</p>
-                    <p class="count">$count_40_3g</p><p class="bar"> / </p><p class="count">$count_all_3g</p>
+                    <p class="count">$count_40_3g</p><p class="bar"> / </p><p class="count">$count_all_3g_40</p>
                     <p class="ratio">$ratio_40_3g %</p>
                 </div>
                 <div class="contents-container">
                     <p class="group">長岡</p>
-                    <p class="count">$count_40_n</p><p class="bar"> / </p><p class="count">$count_all_n</p>
+                    <p class="count">$count_40_n</p><p class="bar"> / </p><p class="count">$count_all_n_40</p>
                     <p class="ratio">$ratio_40_n %</p>
                 </div>
                 <div class="contents-container">
                     <p class="group">その他</p>
-                    <p class="count">$count_40_other</p><p class="bar"> / </p><p class="count">$count_all_other</p>
+                    <p class="count">$count_40_other</p><p class="bar"> / </p><p class="count">$count_all_other_40</p>
                     <p class="ratio">$ratio_40_other %</p>
                 </div>
                 <div class="contents-container">
                     <p class="group">総計</p>
-                    <p class="count">$count_40_all</p><p class="bar"> / </p><p class="count">$count_all_all</p>
+                    <p class="count">$count_40_all</p><p class="bar"> / </p><p class="count">$count_all_all_40</p>
                     <p class="ratio">$ratio_40_all %</p>
                 </div>
                 </div>
@@ -137,7 +137,7 @@
     <footer>
         <div class="notes">
             <p>※CPHは暫定値です。</p>
-            <p>※折返し率は滞留分も加味されております。</p>
+            <p>※折返し率は受付滞留分も加味されております。</p>
             <p>ページは1分ごと, データは3分ごとに更新されます。</p>
         </div>
     </footer>

@@ -63,11 +63,18 @@ def df_to_html():
     count_direct_all_n = df_kpi_count.loc['長岡', '電話対応数']
     count_direct_all_other = df_kpi_count.loc['その他', '電話対応数']
     count_direct_all_all = df_kpi_count.loc['総計', '電話対応数']
-    count_all_2g = df_kpi_count.loc['第2G', '指標集計対象']
-    count_all_3g = df_kpi_count.loc['第3G', '指標集計対象']
-    count_all_n = df_kpi_count.loc['長岡', '指標集計対象']
-    count_all_other = df_kpi_count.loc['その他', '指標集計対象']
-    count_all_all = df_kpi_count.loc['総計', '指標集計対象']
+
+    count_all_2g_20 = df_kpi_count.loc['第2G', '指標集計対象'] + df_kpi_count.loc['第2G', '20分超滞留中']
+    count_all_3g_20 = df_kpi_count.loc['第3G', '指標集計対象'] + df_kpi_count.loc['第3G', '20分超滞留中']
+    count_all_n_20 = df_kpi_count.loc['長岡', '指標集計対象'] + df_kpi_count.loc['長岡', '20分超滞留中']
+    count_all_other_20 = df_kpi_count.loc['その他', '指標集計対象'] + df_kpi_count.loc['その他', '20分超滞留中']
+    count_all_all_20 = df_kpi_count.loc['総計', '指標集計対象'] + df_kpi_count.loc['総計', '20分超滞留中']
+
+    count_all_2g_40 = df_kpi_count.loc['第2G', '指標集計対象'] + df_kpi_count.loc['第2G', '40分超滞留中']
+    count_all_3g_40 = df_kpi_count.loc['第3G', '指標集計対象'] + df_kpi_count.loc['第3G', '40分超滞留中']
+    count_all_n_40 = df_kpi_count.loc['長岡', '指標集計対象'] + df_kpi_count.loc['長岡', '40分超滞留中']
+    count_all_other_40 = df_kpi_count.loc['その他', '指標集計対象'] + df_kpi_count.loc['その他', '40分超滞留中']
+    count_all_all_40 = df_kpi_count.loc['総計', '指標集計対象'] + df_kpi_count.loc['総計', '40分超滞留中']
 
     monitor_acw = mp.convert_time_format(dep_acw)
     monitor_att = mp.convert_time_format(dep_att)
@@ -124,11 +131,16 @@ def df_to_html():
                                count_direct_all_n=count_direct_all_n,
                                count_direct_all_other=count_direct_all_other,
                                count_direct_all_all=count_direct_all_all,
-                               count_all_2g=count_all_2g,
-                               count_all_3g=count_all_3g,
-                               count_all_n=count_all_n,
-                               count_all_other=count_all_other,
-                               count_all_all=count_all_all)
+                               count_all_2g_20=count_all_2g_20,
+                               count_all_3g_20=count_all_3g_20,
+                               count_all_n_20=count_all_n_20,
+                               count_all_other_20=count_all_other_20,
+                               count_all_all_20=count_all_all_20,
+                               count_all_2g_40=count_all_2g_40,
+                               count_all_3g_40=count_all_3g_40,
+                               count_all_n_40=count_all_n_40,
+                               count_all_other_40=count_all_other_40,
+                               count_all_all_40=count_all_all_40)
     
     with open(os.path.join(settings.DASHBOARD_PATH, 'dashboard.html'), 'w') as f:
         f.write(html_to_dashboard)
