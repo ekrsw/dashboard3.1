@@ -13,7 +13,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 
-from app.models.process_dataframe import ProcessDataframe
 from app.models import process
 import settings
 
@@ -26,7 +25,6 @@ class Reporter(object):
         get_csv_DL
     """
     def __init__(self, headless_mode=True) -> None:
-        self.process_df = ProcessDataframe()
         self.url = settings.REPORTER_URL
         self.id = settings.REPORTER_ID
         self.headless_mode = headless_mode
