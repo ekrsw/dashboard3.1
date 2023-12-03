@@ -234,7 +234,7 @@ def convert_time_format(time_str):
         # 不正な時間形式の場合はエラーメッセージを表示
         return "Invalid time format"
 
-def get_buffer(r, n, c):
+def get_buffer(r, n, c) -> int:
     """KPIを達成するためのBufferを計算
     
     args:

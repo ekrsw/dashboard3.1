@@ -237,3 +237,199 @@
 2023-12-03 15:23:46,818 INFO test
 2023-12-03 15:25:42,591 INFO test
 2023-12-03 15:28:43,897 INFO test
+2023-12-03 15:31:43,026 INFO test
+2023-12-03 15:34:41,873 INFO test
+2023-12-03 15:37:41,685 INFO test
+2023-12-03 15:40:44,276 INFO test
+2023-12-03 15:43:41,486 INFO test
+2023-12-03 15:46:41,482 INFO test
+2023-12-03 15:49:41,532 INFO test
+2023-12-03 15:52:41,723 INFO test
+2023-12-03 15:55:42,084 INFO test
+2023-12-03 15:58:41,797 INFO test
+2023-12-03 16:01:41,763 INFO test
+2023-12-03 16:04:41,710 INFO test
+2023-12-03 16:07:41,644 INFO test
+2023-12-03 16:10:42,175 INFO test
+2023-12-03 16:13:41,224 INFO test
+2023-12-03 16:16:41,488 INFO test
+2023-12-03 16:19:41,148 INFO test
+2023-12-03 16:22:41,108 INFO test
+2023-12-03 16:25:40,952 INFO test
+2023-12-03 16:28:41,091 INFO test
+2023-12-03 16:31:41,532 INFO test
+2023-12-03 16:31:42,130 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:34:40,991 INFO test
+2023-12-03 16:34:41,633 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:37:40,993 INFO test
+2023-12-03 16:37:41,599 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:40:41,194 INFO test
+2023-12-03 16:40:41,796 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:43:41,004 INFO test
+2023-12-03 16:43:41,631 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:46:41,140 INFO test
+2023-12-03 16:46:41,765 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:49:41,182 INFO test
+2023-12-03 16:49:41,791 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:52:41,049 INFO test
+2023-12-03 16:52:41,658 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:55:41,114 INFO test
+2023-12-03 16:55:41,723 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 16:58:41,145 INFO test
+2023-12-03 16:58:41,739 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:01:41,016 INFO test
+2023-12-03 17:01:41,641 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:04:41,157 INFO test
+2023-12-03 17:04:41,751 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:07:41,157 INFO test
+2023-12-03 17:07:41,751 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:10:41,372 INFO test
+2023-12-03 17:10:41,997 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:13:41,189 INFO test
+2023-12-03 17:13:41,798 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:16:41,252 INFO test
+2023-12-03 17:16:41,861 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:19:41,041 INFO test
+2023-12-03 17:19:41,651 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:22:41,189 INFO test
+2023-12-03 17:22:41,798 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:25:41,185 INFO test
+2023-12-03 17:25:41,793 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:28:41,749 INFO test
+2023-12-03 17:28:42,370 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:31:41,170 INFO test
+2023-12-03 17:31:41,786 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:34:41,316 INFO test
+2023-12-03 17:34:41,912 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:37:41,186 INFO test
+2023-12-03 17:37:41,796 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:40:41,291 INFO test
+2023-12-03 17:40:41,916 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 17:43:41,189 INFO test
+2023-12-03 17:46:41,235 INFO test
+2023-12-03 17:49:41,162 INFO test
+2023-12-03 17:52:41,245 INFO test
+2023-12-03 17:55:43,880 INFO test
+2023-12-03 17:58:41,423 INFO test
+2023-12-03 18:01:41,439 INFO test
+2023-12-03 18:04:41,527 INFO test
+2023-12-03 18:07:41,608 INFO test
+2023-12-03 18:10:41,541 INFO test
+2023-12-03 18:13:41,304 INFO test
+2023-12-03 18:16:41,656 INFO test
+2023-12-03 18:19:41,306 INFO test
+2023-12-03 18:22:41,272 INFO test
+2023-12-03 18:25:41,374 INFO test
+2023-12-03 18:28:41,312 INFO test
+2023-12-03 18:31:41,237 INFO test
+2023-12-03 18:34:41,391 INFO test
+2023-12-03 18:37:41,526 INFO test
+2023-12-03 18:40:41,544 INFO test
+2023-12-03 18:43:41,651 INFO test
+2023-12-03 18:43:42,308 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 18:46:41,433 INFO test
+2023-12-03 18:46:42,043 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 18:49:42,453 INFO test
+2023-12-03 18:49:43,078 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 18:52:41,477 INFO test
+2023-12-03 18:52:42,086 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 18:55:40,451 INFO test
+2023-12-03 18:55:41,061 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 18:58:40,549 INFO test
+2023-12-03 18:58:41,143 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 19:01:40,710 INFO test
+2023-12-03 19:01:41,304 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 19:04:41,231 INFO test
+2023-12-03 19:04:41,841 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 19:07:40,604 INFO test
+2023-12-03 19:07:41,228 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 19:10:40,500 INFO test
+2023-12-03 19:10:41,109 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 19:13:41,126 INFO test
+2023-12-03 19:16:41,155 INFO test
+2023-12-03 19:19:40,862 INFO test
+2023-12-03 19:22:40,599 INFO test
+2023-12-03 19:25:43,307 INFO test
+2023-12-03 19:28:41,370 INFO test
+2023-12-03 19:31:41,211 INFO test
+2023-12-03 19:34:40,619 INFO test
+2023-12-03 19:37:41,164 INFO test
+2023-12-03 19:40:41,013 INFO test
+2023-12-03 19:43:40,920 INFO test
+2023-12-03 19:46:40,992 INFO test
+2023-12-03 19:49:41,246 INFO test
+2023-12-03 19:52:43,378 INFO test
+2023-12-03 19:55:41,086 INFO test
+2023-12-03 19:58:40,660 INFO test
+2023-12-03 20:01:40,754 INFO test
+2023-12-03 20:04:40,976 INFO test
+2023-12-03 20:07:40,808 INFO test
+2023-12-03 20:10:41,102 INFO test
+2023-12-03 20:13:41,619 INFO test
+2023-12-03 20:13:42,228 WARNING There was an error managing chrome (error sending request for url (https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json): error trying to connect: proxy authentication required); using driver found in the cache
+2023-12-03 20:16:40,833 INFO test
+2023-12-03 20:19:41,114 INFO test
+2023-12-03 20:22:41,401 INFO test
+2023-12-03 20:25:41,313 INFO test
+2023-12-03 20:28:41,550 INFO test
+2023-12-03 20:31:40,741 INFO test
+2023-12-03 20:34:41,574 INFO test
+2023-12-03 20:37:41,595 INFO test
+2023-12-03 20:40:41,273 INFO test
+2023-12-03 20:43:41,161 INFO test
+2023-12-03 20:46:41,533 INFO test
+2023-12-03 20:49:40,784 INFO test
+2023-12-03 20:52:40,906 INFO test
+2023-12-03 20:55:40,792 INFO test
+2023-12-03 20:58:41,321 INFO test
+2023-12-03 21:01:41,016 INFO test
+2023-12-03 21:04:42,301 INFO test
+2023-12-03 21:07:41,820 INFO test
+2023-12-03 21:10:42,190 INFO test
+2023-12-03 21:13:41,505 INFO test
+2023-12-03 21:16:42,019 INFO test
+2023-12-03 21:19:41,807 INFO test
+2023-12-03 21:22:41,728 INFO test
+2023-12-03 21:25:41,824 INFO test
+2023-12-03 21:28:41,701 INFO test
+2023-12-03 21:31:41,920 INFO test
+2023-12-03 21:34:41,703 INFO test
+2023-12-03 21:37:41,707 INFO test
+2023-12-03 21:40:42,125 INFO test
+2023-12-03 21:43:43,911 INFO test
+2023-12-03 21:46:43,552 INFO test
+2023-12-03 21:49:42,896 INFO test
+2023-12-03 21:52:43,280 INFO test
+2023-12-03 21:55:44,507 INFO test
+2023-12-03 21:58:39,123 INFO test
+2023-12-03 22:01:43,255 INFO test
+2023-12-03 22:04:42,825 INFO test
+2023-12-03 22:07:43,223 INFO test
+2023-12-03 22:10:43,708 INFO test
+2023-12-03 22:12:11,726 INFO test
+2023-12-03 22:13:42,935 INFO test
+2023-12-03 22:16:43,470 INFO test
+2023-12-03 22:19:43,923 INFO test
+2023-12-03 22:22:43,311 INFO test
+2023-12-03 22:25:46,083 INFO test
+2023-12-03 22:26:56,752 INFO test
+2023-12-03 22:28:43,520 INFO test
+2023-12-03 22:29:00,996 INFO test
+2023-12-03 22:31:43,493 INFO test
+2023-12-03 22:33:57,398 INFO test
+2023-12-03 22:34:45,909 INFO test
+2023-12-03 22:37:43,789 INFO test
+2023-12-03 22:37:58,553 INFO test
+2023-12-03 22:40:38,349 INFO test
+2023-12-03 22:43:43,149 INFO test
+2023-12-03 22:46:24,583 INFO test
+2023-12-03 22:46:44,581 INFO test
+2023-12-03 22:49:19,295 INFO test
+2023-12-03 22:49:44,120 INFO test
+2023-12-03 22:50:06,292 INFO test
+2023-12-03 22:52:44,453 INFO test
+2023-12-03 22:52:54,369 INFO test
+2023-12-03 22:54:29,493 INFO test
+2023-12-03 22:55:43,821 INFO test
+2023-12-03 22:57:26,926 INFO test
+2023-12-03 22:58:43,652 INFO test
