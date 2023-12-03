@@ -163,7 +163,10 @@ def df_to_html():
                                count_all_3g_40=count_all_3g_40,
                                count_all_n_40=count_all_n_40,
                                count_all_other_40=count_all_other_40,
-                               count_all_all_40=count_all_all_40)
+                               count_all_all_40=count_all_all_40,
+                               buffer_direct=buffer_direct,
+                               buffer_20=buffer_20,
+                               buffer_40=buffer_40)
     
     with open(os.path.join(settings.DASHBOARD_PATH, 'dashboard.html'), 'w') as f:
         f.write(html_to_dashboard)

@@ -1,4 +1,5 @@
 body {
+    width: 1140px;
     font-family: "Meyrio";
     background-color: #F5F7FD;
 }
@@ -7,22 +8,24 @@ body {
     margin: 5px 5px 5px 5px;
 }
 .acc_time_container {
+    width: 1140px;
     display: flex;
 }
 .aac_box, .time_box {
     width: 160px;
-    height: 90px;
+    height: 70px;
     border-radius: 10px;
     background-color: #FFFFFF;
     padding: 5px 10px;
     margin: 5px 5px;
 }
 .container {
+    width: 1140px;
     display: flex;
 }
 .box {
     width: 350px;
-    height: 200px;
+    height: 220px;
     border-radius: 10px;
     background-color: #FFFFFF;
     padding: 5px 10px;
@@ -36,17 +39,47 @@ body {
 }
 .label {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
+    margin: 0px;
     color: #193A95;
 }
+.buffer-container {
+    width: 320px;
+    heitht: 23px;
+    display: flex;
+}
+.buffer_label {
+    width: 300px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 2px;
+    color: #404040;
+}
+.buffer {
+    width: 50px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0px;
+    color: #404040;
+}
 .contents-container {
-    width: 700px;
+    width: 340px;
+    heitht: 23px;
     display: flex;
     font-size: 20px;
     margin: 0px;
 }
+.label_container {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+}
 .group {
     font-weight: bold;
+    font-size: 18px;
     color: #404040;
     width: 100px;
     margin: 0px;
@@ -75,6 +108,13 @@ body {
 }
 .group, .ratio, .count, .bar {
     height: 33px;
+}
+.negative {
+    color: red;
+}
+
+.positive {
+    color: green;
 }
 
 h1 {
