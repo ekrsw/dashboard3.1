@@ -1,6 +1,4 @@
-import datetime as dt
 import logging
-import os
 
 from app.controller import controller
 

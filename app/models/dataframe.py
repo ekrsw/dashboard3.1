@@ -178,6 +178,7 @@ class PendingDataFrame(BaseDataFrame):
         df = df[(df['顛末コード (関連) (サポート案件)'] == '対応中') | (df['顛末コード (関連) (サポート案件)'] == '対応待ち')]
 
         # 件名に「【受付】」が含まれているもののみ残す。
+        df['件名'] = df['件名'].astype(str) 
         contains_df = df[df['件名'].str.contains('【受付】', na=False)]
         uncontains_df = df[~df['件名'].str.contains('【受付】', na=False)]
 
