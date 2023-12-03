@@ -22,63 +22,77 @@ def df_to_html():
     dep_att = df_performance.loc['合計', 'ATT']
     dep_cph = df_performance.loc['合計', 'CPH']
     
+    # KPIの件数のDataFrameから、直受け率、20分以内率のDataFrameを作成する。
     df_kpi_ratio = mp.calc_ratio_20_40(df_kpi_count)
 
+    # 直受け率
     ratio_direct_2g = df_kpi_ratio.loc['第2G', '直受け率']
     ratio_direct_3g = df_kpi_ratio.loc['第3G', '直受け率']
     ratio_direct_n = df_kpi_ratio.loc['長岡', '直受け率']
     ratio_direct_other = df_kpi_ratio.loc['その他', '直受け率']
     ratio_direct_all = df_kpi_ratio.loc['総計', '直受け率']
 
+    # 20分以内率
     ratio_20_2g = df_kpi_ratio.loc['第2G', '20分以内率']
     ratio_20_3g = df_kpi_ratio.loc['第3G', '20分以内率']
     ratio_20_n = df_kpi_ratio.loc['長岡', '20分以内率']
     ratio_20_other = df_kpi_ratio.loc['その他', '20分以内率']
     ratio_20_all = df_kpi_ratio.loc['総計', '20分以内率']
+
+    # 40分以内率
     ratio_40_2g = df_kpi_ratio.loc['第2G', '40分以内率']
     ratio_40_3g = df_kpi_ratio.loc['第3G', '40分以内率']
     ratio_40_n = df_kpi_ratio.loc['長岡', '40分以内率']
     ratio_40_other = df_kpi_ratio.loc['その他', '40分以内率']
     ratio_40_all = df_kpi_ratio.loc['総計', '40分以内率']
 
+    # 直受け件数
     count_direct_2g = df_kpi_count.loc['第2G', '直受け']
     count_direct_3g = df_kpi_count.loc['第3G', '直受け']
     count_direct_n = df_kpi_count.loc['長岡', '直受け']
     count_direct_other = df_kpi_count.loc['その他', '直受け']
     count_direct_all = df_kpi_count.loc['総計', '直受け']
 
+    # 20分以内件数
     count_20_2g = df_kpi_count.loc['第2G', '20分以内']
     count_20_3g = df_kpi_count.loc['第3G', '20分以内']
     count_20_n = df_kpi_count.loc['長岡', '20分以内']
     count_20_other = df_kpi_count.loc['その他', '20分以内']
     count_20_all = df_kpi_count.loc['総計', '20分以内']
+
+    # 40分以内件数
     count_40_2g = df_kpi_count.loc['第2G', '40分以内']
     count_40_3g = df_kpi_count.loc['第3G', '40分以内']
     count_40_n = df_kpi_count.loc['長岡', '40分以内']
     count_40_other = df_kpi_count.loc['その他', '40分以内']
     count_40_all = df_kpi_count.loc['総計', '40分以内']
 
+    # 電話対応数（直受け率の分母）
     count_direct_all_2g = df_kpi_count.loc['第2G', '電話対応数']
     count_direct_all_3g = df_kpi_count.loc['第3G', '電話対応数']
     count_direct_all_n = df_kpi_count.loc['長岡', '電話対応数']
     count_direct_all_other = df_kpi_count.loc['その他', '電話対応数']
     count_direct_all_all = df_kpi_count.loc['総計', '電話対応数']
 
+    # 指標集計対象 + 20分超滞留中（20分以内率の分母）
     count_all_2g_20 = df_kpi_count.loc['第2G', '指標集計対象'] + df_kpi_count.loc['第2G', '20分超滞留中']
     count_all_3g_20 = df_kpi_count.loc['第3G', '指標集計対象'] + df_kpi_count.loc['第3G', '20分超滞留中']
     count_all_n_20 = df_kpi_count.loc['長岡', '指標集計対象'] + df_kpi_count.loc['長岡', '20分超滞留中']
     count_all_other_20 = df_kpi_count.loc['その他', '指標集計対象'] + df_kpi_count.loc['その他', '20分超滞留中']
     count_all_all_20 = df_kpi_count.loc['総計', '指標集計対象'] + df_kpi_count.loc['総計', '20分超滞留中']
 
+    # 指標集計対象 + 40分超滞留中（40分以内率の分母）
     count_all_2g_40 = df_kpi_count.loc['第2G', '指標集計対象'] + df_kpi_count.loc['第2G', '40分超滞留中']
     count_all_3g_40 = df_kpi_count.loc['第3G', '指標集計対象'] + df_kpi_count.loc['第3G', '40分超滞留中']
     count_all_n_40 = df_kpi_count.loc['長岡', '指標集計対象'] + df_kpi_count.loc['長岡', '40分超滞留中']
     count_all_other_40 = df_kpi_count.loc['その他', '指標集計対象'] + df_kpi_count.loc['その他', '40分超滞留中']
     count_all_all_40 = df_kpi_count.loc['総計', '指標集計対象'] + df_kpi_count.loc['総計', '40分超滞留中']
 
+    # モニター用のACW, ATT, CPHを取得する。
     monitor_acw = mp.convert_time_format(dep_acw)
     monitor_att = mp.convert_time_format(dep_att)
 
+    # 個人別パフォーマンスのテーブルを作成、HTMLに変換する。
     df_performance_html = df_performance.copy()
     df_performance_html = df_performance_html.drop('合計')
     df_performance_html['氏名'] = df_performance_html.index
