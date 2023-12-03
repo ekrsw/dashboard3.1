@@ -12,7 +12,7 @@
         <div class="last-data-acquisition-date">
             <p>$formatten_datetime Œ»İ</p>
         </div>
-        <div class="title"><h1>KPI‘¬•ñ</h1><div>
+        <div class="title"><h1>KPI‘¬•ñyƒeƒXƒgz</h1><div>
     </header>
     <main>
         <div class="acc_time_container">

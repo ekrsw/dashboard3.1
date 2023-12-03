@@ -1,4 +1,5 @@
 import datetime as dt
+import math
 import numpy as np
 
 import pandas as pd
@@ -232,3 +233,16 @@ def convert_time_format(time_str):
     except ValueError:
         # 不正な時間形式の場合はエラーメッセージを表示
         return "Invalid time format"
+
+def get_buffer(r, n, c):
+
+    if n / c >= r:
+        b = (n / r) - c
+    else:
+        b = (n - c * r) / (1 - r)
+    print(b)
+    if b >= 0:
+        b = math.floor(b)
+    else:
+        b = math.ceil(b)
+    return b

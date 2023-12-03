@@ -101,6 +101,15 @@ def df_to_html():
     html_table = html_table.replace(' style="text-align: right;"', '')
     html_table = html_table.replace('dataframe styled-table', 'styled-table')
 
+    # 各種Bufferの計算
+    buffer_direct = mp.get_buffer(settings.KPI_DIRECT, count_direct_all, count_direct_all_all)
+    buffer_20 = mp.get_buffer(settings.KPI_20, count_20_all, count_all_all_20)
+    buffer_40 = mp.get_buffer(settings.KPI_40, count_40_all, count_all_all_40)
+
+    print(buffer_direct)
+    print(buffer_20)
+    print(buffer_40)
+
     # ダッシュボード用のテンプレート読込み
     formatten_datetime = now.strftime('%Y/%m/%d %H:%M:%S')
     with open(r'templates\templates_dashboard.txt', 'r') as template_file:
