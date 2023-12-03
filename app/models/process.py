@@ -235,14 +235,21 @@ def convert_time_format(time_str):
         return "Invalid time format"
 
 def get_buffer(r, n, c):
-
+    """KPIを達成するためのBufferを計算
+    
+    args:
+        r: KPIの目標値
+        n: 現在の達成件数
+        c: 分母"""
+    
+    # KPIを達成できている場合は単純計算、できていない場合少し複雑。
     if n / c >= r:
         b = (n / r) - c
     else:
         b = (n - c * r) / (1 - r)
-    print(b)
+    
     if b >= 0:
         b = math.floor(b)
     else:
         b = math.ceil(b)
-    return b
+    return int(b)
