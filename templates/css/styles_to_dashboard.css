@@ -44,7 +44,7 @@ body {
     color: #193A95;
 }
 .buffer-container {
-    width: 320px;
+    width: 325px;
     heitht: 23px;
     display: flex;
 }
@@ -57,7 +57,7 @@ body {
     color: #404040;
 }
 .buffer {
-    width: 50px;
+    width: 55px;
     text-align: right;
     font-weight: bold;
     font-size: 18px;

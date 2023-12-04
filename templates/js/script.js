@@ -23,3 +23,25 @@ setInterval(updateDisplayElements, 1000);
 
 // ページ読み込み時にも時刻を初期表示
 updateDisplayElements();
+
+// Bufferの色を変える関数
+function updateNumberDisplay() {
+    var bufferElements = document.getElementsByClassName('buffer');
+
+    for (var i = 0; i < bufferElements.length; i++) {
+        var buffer = parseInt(bufferElements[i].textContent, 10);
+        
+        if (buffer < 0) {
+            bufferElements[i].className = 'buffer negative';
+        } else if (buffer > 0) {
+            bufferElements[i].className = 'buffer positive';
+        } else {
+            bufferElements[i].className = 'buffer';
+        }
+    }
+}
+
+// ページが読み込まれたときに実行
+document.addEventListener('DOMContentLoaded', function() {
+    updateNumberDisplay();
+});
