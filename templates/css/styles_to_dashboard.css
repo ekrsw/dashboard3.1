@@ -122,6 +122,12 @@ h1 {
     color: #404040;
     margin: 0px 0px 0px 15px;
 }
+.info {
+    font-weight: bold;
+    font-size: 13px;
+    color: #404040;
+    margin: 0px 0px 0px 15px;
+}
 .notes p {
     font-size: 11px;
     margin: 0px 0px 0px 15px;

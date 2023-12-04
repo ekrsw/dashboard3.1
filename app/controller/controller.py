@@ -1,4 +1,5 @@
 import datetime as dt
+import logging
 import os
 import pandas as pd
 import string
@@ -8,12 +9,24 @@ from app.models import process as mp
 
 import settings
 
+logger = logging.getLogger(__name__)
+logger.setLevel(settings.LOGLEVEL)
 close_file = os.path.join(settings.FILES_PATH, settings.TODAYS_CLOSE_FILE)
 activity_file = os.path.join(settings.FILES_PATH, settings.TODAYS_ACTIVITY_FILE)
 now = dt.datetime.now()
 
 
 def df_to_html():
+
+    # 動的ファイルのログを読み込み正常に更新されているかどうかを判定
+    last_log_timestamp = read_update_log()
+    if is_within_last_five_minutes(last_log_timestamp):
+        is_updated = "正常"
+        logger.info("動的ファイルは正常に更新されています。")
+    else:
+        is_updated = "更新されていません"
+        logger.error("動的ファイルが更新されていません。")
+    
     df_performance = make_df_performance()
     df_kpi_count = make_df_kpi()
     
@@ -111,58 +124,59 @@ def df_to_html():
     with open(r'templates\templates_dashboard.txt', 'r') as template_file:
         t_dashboard = string.Template(template_file.read())
     
-    html_to_dashboard = t_dashboard.substitute(formatten_datetime=formatten_datetime,
-                               dep_acw=dep_acw,
-                               dep_att=dep_att,
-                               dep_cph=dep_cph,
-                               ratio_direct_2g=ratio_direct_2g,
-                               ratio_direct_3g=ratio_direct_3g,
-                               ratio_direct_n=ratio_direct_n,
-                               ratio_direct_other=ratio_direct_other,
-                               ratio_direct_all=ratio_direct_all,
-                               ratio_20_2g=ratio_20_2g,
-                               ratio_20_3g=ratio_20_3g,
-                               ratio_20_n=ratio_20_n,
-                               ratio_20_other=ratio_20_other,
-                               ratio_20_all=ratio_20_all,
-                               ratio_40_2g=ratio_40_2g,
-                               ratio_40_3g=ratio_40_3g,
-                               ratio_40_n=ratio_40_n,
-                               ratio_40_other=ratio_40_other,
-                               ratio_40_all=ratio_40_all,
-                               count_direct_2g=count_direct_2g,
-                               count_direct_3g=count_direct_3g,
-                               count_direct_n=count_direct_n,
-                               count_direct_other=count_direct_other,
-                               count_direct_all=count_direct_all,
-                               count_20_2g=count_20_2g,
-                               count_20_3g=count_20_3g,
-                               count_20_n=count_20_n,
-                               count_20_other=count_20_other,
-                               count_20_all=count_20_all,
-                               count_40_2g=count_40_2g,
-                               count_40_3g=count_40_3g,
-                               count_40_n=count_40_n,
-                               count_40_other=count_40_other,
-                               count_40_all=count_40_all,
-                               count_direct_all_2g=count_direct_all_2g,
-                               count_direct_all_3g=count_direct_all_3g,
-                               count_direct_all_n=count_direct_all_n,
-                               count_direct_all_other=count_direct_all_other,
-                               count_direct_all_all=count_direct_all_all,
-                               count_all_2g_20=count_all_2g_20,
-                               count_all_3g_20=count_all_3g_20,
-                               count_all_n_20=count_all_n_20,
-                               count_all_other_20=count_all_other_20,
-                               count_all_all_20=count_all_all_20,
-                               count_all_2g_40=count_all_2g_40,
-                               count_all_3g_40=count_all_3g_40,
-                               count_all_n_40=count_all_n_40,
-                               count_all_other_40=count_all_other_40,
-                               count_all_all_40=count_all_all_40,
-                               buffer_direct=buffer_direct,
-                               buffer_20=buffer_20,
-                               buffer_40=buffer_40)
+    html_to_dashboard = t_dashboard.substitute(is_updated=is_updated,
+                                formatten_datetime=formatten_datetime,
+                                dep_acw=dep_acw,
+                                dep_att=dep_att,
+                                dep_cph=dep_cph,
+                                ratio_direct_2g=ratio_direct_2g,
+                                ratio_direct_3g=ratio_direct_3g,
+                                ratio_direct_n=ratio_direct_n,
+                                ratio_direct_other=ratio_direct_other,
+                                ratio_direct_all=ratio_direct_all,
+                                ratio_20_2g=ratio_20_2g,
+                                ratio_20_3g=ratio_20_3g,
+                                ratio_20_n=ratio_20_n,
+                                ratio_20_other=ratio_20_other,
+                                ratio_20_all=ratio_20_all,
+                                ratio_40_2g=ratio_40_2g,
+                                ratio_40_3g=ratio_40_3g,
+                                ratio_40_n=ratio_40_n,
+                                ratio_40_other=ratio_40_other,
+                                ratio_40_all=ratio_40_all,
+                                count_direct_2g=count_direct_2g,
+                                count_direct_3g=count_direct_3g,
+                                count_direct_n=count_direct_n,
+                                count_direct_other=count_direct_other,
+                                count_direct_all=count_direct_all,
+                                count_20_2g=count_20_2g,
+                                count_20_3g=count_20_3g,
+                                count_20_n=count_20_n,
+                                count_20_other=count_20_other,
+                                count_20_all=count_20_all,
+                                count_40_2g=count_40_2g,
+                                count_40_3g=count_40_3g,
+                                count_40_n=count_40_n,
+                                count_40_other=count_40_other,
+                                count_40_all=count_40_all,
+                                count_direct_all_2g=count_direct_all_2g,
+                                count_direct_all_3g=count_direct_all_3g,
+                                count_direct_all_n=count_direct_all_n,
+                                count_direct_all_other=count_direct_all_other,
+                                count_direct_all_all=count_direct_all_all,
+                                count_all_2g_20=count_all_2g_20,
+                                count_all_3g_20=count_all_3g_20,
+                                count_all_n_20=count_all_n_20,
+                                count_all_other_20=count_all_other_20,
+                                count_all_all_20=count_all_all_20,
+                                count_all_2g_40=count_all_2g_40,
+                                count_all_3g_40=count_all_3g_40,
+                                count_all_n_40=count_all_n_40,
+                                count_all_other_40=count_all_other_40,
+                                count_all_all_40=count_all_all_40,
+                                buffer_direct=buffer_direct,
+                                buffer_20=buffer_20,
+                                buffer_40=buffer_40)
     
     with open(os.path.join(settings.DASHBOARD_PATH, 'dashboard.html'), 'w') as f:
         f.write(html_to_dashboard)
@@ -239,3 +253,37 @@ def read_today_shift_file():
     shift_df.columns = ['シフト']
 
     return shift_df
+
+def read_update_log():
+    """動的ファイルの更新プログラムのログファイルを読み込む。"""
+
+    with open(settings.UPDATE_LOGFILE, 'r') as f:
+        log_entries = f.read()
+    
+    last_log_entry = log_entries.strip().split('\n')[-1]
+    last_log_timestamp = last_log_entry.split(' - ')[0]
+
+    last_log_timestamp
+    return last_log_timestamp
+
+from datetime import datetime, timedelta
+
+def is_within_last_five_minutes(timestamp):
+    """
+    timestampが現在時刻から5分以内かどうかを判定する。
+
+    Args:
+    timestamp (str): str型 "YYYY-MM-DD HH:MM:SS,fff"
+
+    Returns:
+    bool: timestampが現在時刻から5分以内ならTrue、そうでなければFalse
+    """
+    
+    current_time = now
+
+    timestamp_format = "%Y-%m-%d %H:%M:%S,%f"
+    timestamp_datetime = dt.datetime.strptime(timestamp, timestamp_format)
+
+    return timestamp_datetime >= current_time - dt.timedelta(minutes=5)
+
+

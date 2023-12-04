@@ -12,7 +12,8 @@
         <div class="last-data-acquisition-date">
             <p>$formatten_datetime 現在</p>
         </div>
-        <div class="title"><h1>KPI速報【テスト】</h1><div>
+        <div class="title"><h1>テスト　KPI速報【TVS】</h1><div>
+        <div class="info">動的ファイル: <span id="test">$is_updated</span><div>
     </header>
     <main>
         <div class="acc_time_container">
@@ -149,6 +150,7 @@
     <footer>
         <div class="notes">
             <p>※CPHは暫定値です。</p>
+            <p>※TVSのみの集計ですので第3Gは顧問先ソフトウェアは含まれていません。</p>
             <p>※折返し率の分母には受付滞留分で時間が経過したものも含まれています。</p>
             <p>ページは1分ごと, データは3分ごとに更新されます。</p>
         </div>
