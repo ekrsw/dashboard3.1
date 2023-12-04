@@ -4,3 +4,5 @@ run_script.bat
 .venv
 dashboard3.1.code-workspace
 export_test/
+20over.csv
+40over.csv

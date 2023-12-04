@@ -1,9 +1,15 @@
 import datetime as dt
+import logging
 import math
 import numpy as np
 
 import pandas as pd
 
+import settings
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(settings.LOGLEVEL)
 
 def time_to_days(time_str) -> float:
     """hh:mm:ss 形式の時間を1日を1としたときの時間に変換する関数
@@ -95,8 +101,19 @@ def convert_to_num_of_cases_by_per_time(df):
     return c_20, c_30, c_40, c_60, c_60over, not_included
 
 def convert_to_pending_num(df):
-    c_20over = df[df['お待たせ時間'] >= pd.Timedelta(minutes=20)].shape[0]
-    c_40over = df[df['お待たせ時間'] >= pd.Timedelta(minutes=40)].shape[0]
+    df_20over = df[df['お待たせ時間'] >= pd.Timedelta(minutes=20)]
+    df_40over = df[df['お待たせ時間'] >= pd.Timedelta(minutes=40)]
+
+    if settings.DEBUG:
+        try:
+            df_20over.to_csv('20over.csv', encoding="utf_8_sig")
+            df_40over.to_csv('40over.csv', encoding="utf_8_sig")
+        except Exception as exc:
+            logger.info("csv file is open")
+            print(exc)
+
+    c_20over = df_20over.shape[0]
+    c_40over = df_40over.shape[0]
 
     return c_20over, c_40over
 
