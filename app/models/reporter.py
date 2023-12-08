@@ -182,8 +182,3 @@ class Reporter(object):
                 os.rename(old_file_path, new_file_path)
                 break
             num += 1
-    
-    def __del__(self) -> None:
-        """ドライバーをclose"""
-        if self.should_close:
-            self.close()

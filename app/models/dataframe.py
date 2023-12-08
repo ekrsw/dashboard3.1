@@ -224,6 +224,8 @@ def read_reporter(close_file, from_date, to_date) -> ReporterDataFrame:
     
     reporter = Reporter(headless_mode=settings.HEADLESS_MODE)
     df = reporter.get_table_as_dataframe(settings.REPORTER_TEMPLATE, from_date, to_date)
+    # 忘れずにクローズする
+    reporter.close()
     return ReporterDataFrame(df, close_file, from_date, to_date, False)
 
 def read_todays_reporter(close_file) -> ReporterDataFrame:
