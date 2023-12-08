@@ -5,15 +5,15 @@
     <meta http-equiv="refresh" content="60">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles_to_dashboard.css">
-    <title>Dashboard-Test</title>
+    <title>KPI‘¬•ñyTVSz</title>
 </head>
 <body>
     <header>
         <div class="last-data-acquisition-date">
             <p>$formatten_datetime Œ»İ</p>
         </div>
-        <div class="title"><h1>KPI‘¬•ñyTVSz</h1><div>
         <div class="info">“®“Iƒtƒ@ƒCƒ‹: <span id="test">$is_updated</span><div>
+        <div class="title"><h1>KPI‘¬•ñyTVSz</h1><div>
     </header>
     <main>
         <div class="acc_time_container">
