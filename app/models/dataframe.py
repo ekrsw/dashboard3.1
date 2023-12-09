@@ -17,7 +17,7 @@ class BaseDataFrame(pd.DataFrame):
         file_path = os.path.join(settings.FILES_PATH, settings.MEMBER_LIST)
         try:
             member_list = pd.read_excel(file_path).fillna('')
-            member_list = member_list[['レポータ', '氏名', 'グループ', '役職']]
+            member_list = member_list[['レポータ', '氏名', 'グループ', 'SV']]
             member_list['グループ'] = member_list['グループ'].astype(int)
             return member_list
         except Exception as exc:

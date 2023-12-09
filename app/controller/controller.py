@@ -109,7 +109,7 @@ def df_to_html():
     df_performance_html = df_performance.copy()
     df_performance_html = df_performance_html.drop('合計')
     df_performance_html['氏名'] = df_performance_html.index
-    df_performance_html = df_performance_html[['氏名', 'シフト', 'ACW', 'ATT', 'CPH', 'クローズ']]
+    df_performance_html = df_performance_html[['氏名', 'SV', 'シフト', 'ACW', 'ATT', 'CPH', 'クローズ']]
     html_table = df_performance_html.to_html(index=False, classes="styled-table")
     html_table = html_table.replace(' style="text-align: right;"', '')
     html_table = html_table.replace('dataframe styled-table', 'styled-table')
@@ -215,12 +215,14 @@ def make_df_performance() -> pd.DataFrame:
     # シフトファイルとメンバーリストファイルから、シフトと指標のDataFrameを作成する。
     member_list_file = os.path.join(settings.FILES_PATH, settings.MEMBER_LIST)
     df_member_list = pd.read_excel(member_list_file)
+    df_member_list.index = df_member_list['氏名']
     
     df_shift = read_today_shift_file()
     df_shift.index = df_shift.index.map(df_member_list.set_index('Sweet')['氏名'].to_dict())
 
-    df_join = df_acw_att_cph.join(df_shift, how='left').fillna('未設定')
-    df_join = df_join[['シフト', 'ACW', 'ATT', 'CPH', 'クローズ']]
+    df_temp = df_shift.join(df_member_list, how='left').fillna('')
+    df_join = df_acw_att_cph.join(df_temp, how='left').fillna('未設定')
+    df_join = df_join[['SV', 'シフト', 'ACW', 'ATT', 'CPH', 'クローズ']]
     df_sorted = df_join.sort_values(by=['クローズ', 'シフト'], ascending=[False, True])
     return df_sorted
 
