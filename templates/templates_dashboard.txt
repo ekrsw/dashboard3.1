@@ -9,11 +9,11 @@
 </head>
 <body>
     <header>
+        <div class="title"><h1>KPI速報【TVS】</h1><div>
+        <div class="info">動的ファイル: <span id="test">$is_updated</span></div>
         <div class="last-data-acquisition-date">
             <p>$formatten_datetime 現在</p>
         </div>
-        <div class="info">動的ファイル: <span id="test">$is_updated</span><div>
-        <div class="title"><h1>KPI速報【TVS】</h1><div>
     </header>
     <main>
         <div class="acc_time_container">
@@ -152,7 +152,7 @@
             <p>○ CPHは暫定値です。</p>
             <p>○ TVSのみの集計ですので第3Gは顧問先ソフトウェアを含みません。</p>
             <p>○ 折返し率の分母には受付滞留分で時間が経過したものも含まれています。</p>
-            <p>○ ページは1分ごと, データは3分ごとに更新されます。</p>
+            <p>○ データは1分ごとに更新されます。</p>
         </div>
     </footer>
     <script src="script.js"></script>
