@@ -22,7 +22,7 @@ def df_to_html():
     last_log_timestamp = read_update_log()
     if is_within_last_five_minutes(last_log_timestamp):
         is_updated = "正常"
-        logger.info("動的ファイルは正常に更新されています。")
+        logger.debug("動的ファイルは正常に更新されています。")
     else:
         is_updated = "更新されていません"
         logger.error("動的ファイルが更新されていません。")
