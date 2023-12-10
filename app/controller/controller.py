@@ -36,7 +36,7 @@ def df_to_html():
     dep_cph = df_performance.loc['合計', 'CPH']
     
     # シフトが'週休'となっているレコードを削除する。
-    df_performance = df_performance[df_performance['シフト'] != '週休']
+    df_performance = df_performance[~((df_performance['シフト'] == '週休') & (df_performance['クローズ'] == 0))]
 
     # KPIの件数のDataFrameから、直受け率、20分以内率のDataFrameを作成する。
     df_kpi_ratio = mp.calc_ratio_20_40(df_kpi_count)
