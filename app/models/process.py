@@ -265,8 +265,4 @@ def get_buffer(r, n, c) -> int:
     else:
         b = (n - c * r) / (1 - r)
     
-    if b >= 0:
-        b = math.floor(b)
-    else:
-        b = math.ceil(b)
-    return int(b)
+    return int(math.floor(b))
