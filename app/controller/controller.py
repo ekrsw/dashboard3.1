@@ -16,7 +16,7 @@ activity_file = os.path.join(settings.FILES_PATH, settings.TODAYS_ACTIVITY_FILE)
 now = dt.datetime.now()
 
 
-def df_to_html():
+def df_to_html() -> None:
 
     # 動的ファイルのログを読み込み正常に更新されているかどうかを判定
     last_log_timestamp = read_update_log()
@@ -270,8 +270,6 @@ def read_update_log():
 
     last_log_timestamp
     return last_log_timestamp
-
-from datetime import datetime, timedelta
 
 def is_within_last_five_minutes(timestamp):
     """
