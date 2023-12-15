@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
+        <div class="title"><h1>本日の個人別パフォーマンス</h1><div>
         <div class="last-data-acquisition-date">
             <p>$formatten_datetime 現在</p>
         </div>
-        <div class="title"><h1>本日の個人別パフォーマンス</h1><div>
     </header>
     <main>
         $html_table
