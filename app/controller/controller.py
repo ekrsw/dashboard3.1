@@ -288,5 +288,3 @@ def is_within_last_five_minutes(timestamp):
     timestamp_datetime = dt.datetime.strptime(timestamp, timestamp_format)
 
     return timestamp_datetime >= current_time - dt.timedelta(minutes=5)
-
-
