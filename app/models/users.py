@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String, UniqueConstraint, ForeignKey
 
 from app.models.db import BaseDatabase
 
-class User(BaseDatabase):
-    __tablename__ = "user"
+class Users(BaseDatabase):
+    __tablename__ = "uses"
     employee_id = Column(Integer)
     first_name = Column(String)
     last_name = Column(String)

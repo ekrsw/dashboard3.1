@@ -271,7 +271,7 @@ def read_update_log():
     last_log_timestamp
     return last_log_timestamp
 
-def is_within_last_five_minutes(timestamp):
+def is_within_last_five_minutes(timestamp) -> bool:
     """
     timestampが現在時刻から5分以内かどうかを判定する。
 
